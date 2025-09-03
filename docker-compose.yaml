@@ -1,0 +1,28 @@
+services:
+  web:
+    build: .
+    container_name: web
+    volumes:
+      - ./:/var/www/html
+      - "/var/www/html/vendor" #Не перезаписывать папку vendor
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    links:
+      - db
+  db:
+    image: mysql
+    container_name: db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: adminpwd
+      MYSQL_DATABASE: onlinks
+      MYSQL_USER: webadmin
+      MYSQL_PASSWORD: letmein
+    volumes:
+      - my-volume:/var/lib/mysql
+
+# networks:
+#   my-net:
+volumes:
+  my-volume:
