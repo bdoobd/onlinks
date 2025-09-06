@@ -1,8 +1,11 @@
-<?php 
+<?php
 
 namespace App\Core;
 
-class Router {
+use \App\Exceptions\NotFoundException;
+
+class Router
+{
     private array $routes = [];
     private array $params = [];
 
@@ -28,14 +31,24 @@ class Router {
     public function dispatch(string $url): void
     {
         // TODO: Удалить параметры строки запроста (знаки после ?)
-        if($this->match($url)) {
-            echo '<pre>';
-            var_dump('Route found', $this->params);
-            echo '</pre>';
+        if ($this->match($url)) {
+            $controller = $this->params['controller'] ?? null;
+            $action = $this->params['action'] ?? null;
+
+            if ($controller && $action) {
+                $controller = 'App\\Controllers\\' . ucfirst($controller);
+                if (class_exists($controller)) {
+                    $ctrlObject = new $controller;
+
+                    if (method_exists($ctrlObject, $action)) {
+                        call_user_func([$ctrlObject, $action], $this->params);
+                        return;
+                    }
+                }
+            }
+            throw new NotFoundException();
         } else {
-            echo '<pre>';
-            var_dump('Route not found');
-            echo '</pre>';
+            throw new NotFoundException();
         }
     }
 
@@ -53,9 +66,9 @@ class Router {
      *
      * @return array
      */
-    public function getParams() : array 
+    public function getParams(): array
     {
-        return $this->params;    
+        return $this->params;
     }
 
     // Protected
@@ -64,7 +77,7 @@ class Router {
         foreach ($this->routes as $route => $params) {
             if (preg_match($route, $url, $matches)) {
                 foreach ($matches as $key => $value) {
-                    if(is_string($key)) {
+                    if (is_string($key)) {
                         $params[$key] = $value;
                     }
                 }

@@ -1,9 +1,11 @@
-<?php 
+<?php
 
 namespace App\Controllers;
 
-class Home {
-    public function index() {
-        return 'Controller of Home page';
+class Home
+{
+    public function index()
+    {
+        echo 'Controller of Home page';
     }
 }
