@@ -4,9 +4,10 @@ namespace App\Controllers;
 
 class Categories
 {
-    public function read(): array
+    public function read(): void
     {
-        return ['first', 'second', 'third'];
+        // return ['first', 'second', 'third'];
+        echo 'Successfully reading data ....';
     }
 
     public function add(): int

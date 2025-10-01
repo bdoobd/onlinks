@@ -4,6 +4,7 @@ require_once '../vendor/autoload.php';
 
 use App\Exceptions\NotFoundException;
 use App\Core\Router;
+use App\Core\DBH;
 use Dotenv\Dotenv;
 
 // Load .env file content in to environment vars
@@ -11,11 +12,22 @@ $dotenv = Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
 // echo '<pre>';
-// var_dump('DotEnv file: ', $_ENV['TEST_KEY'], $_ENV['SECRET_KEY']);
+// var_dump($_ENV);
 // echo '</pre>';
+// die();
 
-// echo '<h1>Redirected to PUBLIC folder</h1>';
 
+try {
+    $conn = new DBH();
+    $conn->get_connection();
+    echo 'Connection successful';
+} catch (\PDOException $e) {
+    echo 'Error database connection: ' . $e->getMessage();
+}
+
+// echo '<pre>';
+// var_dump($_ENV);
+// echo '</pre>';
 
 // Routing
 $url = ltrim($_SERVER['REQUEST_URI'], '\/');
