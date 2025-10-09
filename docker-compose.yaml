@@ -5,6 +5,7 @@ services:
     volumes:
       - ./:/var/www/html
       - "/var/www/html/vendor" #Не перезаписывать папку vendor
+      - vscode-server:/root/.vscode-server
     ports:
       - "8080:80"
     restart: unless-stopped
@@ -26,3 +27,4 @@ services:
 
 volumes:
   my-volume:
+  vscode-server:
