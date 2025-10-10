@@ -8,7 +8,7 @@ class Error
 {
     static public function missing(NotFoundException $error): void
     {
-        http_response_code($error->getCode());
+        // http_response_code($error->getCode());
 
         echo '<pre>';
         var_dump('resource not found, please proceed to index', $error->getCode());

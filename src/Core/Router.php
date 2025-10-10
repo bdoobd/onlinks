@@ -31,9 +31,19 @@ class Router
     public function dispatch(string $url): void
     {
         // TODO: Удалить параметры строки запроста (знаки после ?)
+
+        echo '<pre>';
+        var_dump($url);
+        echo '</pre>';
+
         if ($this->match($url)) {
             $controller = $this->params['controller'] ?? null;
             $action = $this->params['action'] ?? null;
+
+            echo '<pre>';
+            var_dump($controller, $action);
+            echo '</pre>';
+
 
             if ($controller && $action) {
                 $controller = 'App\\Controllers\\' . ucfirst($controller);
