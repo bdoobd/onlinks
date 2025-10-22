@@ -2,10 +2,30 @@
 
 namespace App\Controllers;
 
+use App\Core\Response;
+use App\Core\View;
+
 class Home
+
 {
-    public function index()
+    protected array $route = [];
+
+    public function __construct(array $route)
     {
-        echo 'Controller of Home page';
+        $this->route = $route;
+    }
+    public function index(): Response
+    {
+        $view = new View($this->route);
+
+        $data = array(
+            'route' => $this->route,
+            'title' => 'Here is my title',
+        );
+
+
+        $markup = $view->render($data);
+
+        return new Response($markup);
     }
 }

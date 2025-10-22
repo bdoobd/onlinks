@@ -26,13 +26,13 @@ class App
     public function run(): void
     {
         try {
-            $this->router->dispatch($this->url);
+            $run = $this->router->dispatch($this->url);
+            $run->send();
         } catch (NotFoundException $e) {
             \App\Controllers\Error::missing($e);
         } catch (Throwable $e) {
-            echo '<pre>';
-            var_dump($e->getMessage());
-            echo '</pre>';
+            $errorResponse = new Response('Ошибка: ' . $e->getMessage(), 500);
+            $errorResponse->send();
         }
     }
 

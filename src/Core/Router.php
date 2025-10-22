@@ -2,7 +2,8 @@
 
 namespace App\Core;
 
-use \App\Exceptions\NotFoundException;
+use App\Exceptions\{NoAction, NoClass, NotFoundException};
+use App\Core\Response;
 
 class Router
 {
@@ -28,38 +29,58 @@ class Router
         $this->routes[$url] = $params;
     }
 
-    public function dispatch(string $url): void
+    public function dispatch(string $url): Response
     {
         // TODO: Удалить параметры строки запроста (знаки после ?)
 
-        echo '<pre>';
-        var_dump($url);
-        echo '</pre>';
-
         if ($this->match($url)) {
-            $controller = $this->params['controller'] ?? null;
-            $action = $this->params['action'] ?? null;
+            $controllerName = 'App\\Controllers\\' . ucfirst($this->params['controller']);;
+            $action = $this->params['action'];
 
-            echo '<pre>';
-            var_dump($controller, $action);
-            echo '</pre>';
-
-
-            if ($controller && $action) {
-                $controller = 'App\\Controllers\\' . ucfirst($controller);
-                if (class_exists($controller)) {
-                    $ctrlObject = new $controller;
-
-                    if (method_exists($ctrlObject, $action)) {
-                        call_user_func([$ctrlObject, $action], $this->params);
-                        return;
-                    }
-                }
+            if (!class_exists($controllerName)) {
+                throw new NoClass();
             }
-            throw new NotFoundException();
-        } else {
-            throw new NotFoundException();
+
+            $controller = new $controllerName($this->params);
+
+            if (!method_exists($controller, $action)) {
+                throw new NoAction();
+            }
+
+            $result = call_user_func([$controller, $action], $this->params);
+
+            if ($result instanceof Response) {
+                return $result;
+            }
+
+            return new Response((string) $result);
+
+            // $controller = $this->params['controller'] ?? null;
+            // $action = $this->params['action'] ?? null;
+
+            // if ($controller && $action) {
+            //     $controller = 'App\\Controllers\\' . ucfirst($controller);
+            //     if (class_exists($controller)) {
+            //         $ctrlObject = new $controller;
+
+            //         if (method_exists($ctrlObject, $action)) {
+            //             call_user_func([$ctrlObject, $action], $this->params);
+
+            //             $view = new View($this->params);
+            //             echo $view->render();
+
+            //             return;
+            //         } else {
+            //             throw new NoAction();
+            //         }
+            //     } else {
+            //         throw new NoClass();
+            //     }
+            // }
+            // throw new NotFoundException();
         }
+
+        throw new NotFoundException();
     }
 
     /**
