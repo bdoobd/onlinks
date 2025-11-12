@@ -11,7 +11,7 @@ class View
     {
         $this->route = $route;
     }
-    public function render($data = [])
+    public function render($data = []): string
     {
         $viewFile = $this->route;
 

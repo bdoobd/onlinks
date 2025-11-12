@@ -54,30 +54,6 @@ class Router
             }
 
             return new Response((string) $result);
-
-            // $controller = $this->params['controller'] ?? null;
-            // $action = $this->params['action'] ?? null;
-
-            // if ($controller && $action) {
-            //     $controller = 'App\\Controllers\\' . ucfirst($controller);
-            //     if (class_exists($controller)) {
-            //         $ctrlObject = new $controller;
-
-            //         if (method_exists($ctrlObject, $action)) {
-            //             call_user_func([$ctrlObject, $action], $this->params);
-
-            //             $view = new View($this->params);
-            //             echo $view->render();
-
-            //             return;
-            //         } else {
-            //             throw new NoAction();
-            //         }
-            //     } else {
-            //         throw new NoClass();
-            //     }
-            // }
-            // throw new NotFoundException();
         }
 
         throw new NotFoundException();

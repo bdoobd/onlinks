@@ -3,7 +3,7 @@
 namespace App\Core;
 
 use Dotenv\Dotenv;
-use App\Exceptions\NotFoundException;
+use App\Exceptions\{NotFoundException, NoAction, NoClass};
 use Throwable;
 
 class App
@@ -30,6 +30,8 @@ class App
             $run->send();
         } catch (NotFoundException $e) {
             \App\Controllers\Error::missing($e);
+        } catch (NoClass | NoAction $e) {
+            \App\Controllers\Error::linkError($e);
         } catch (Throwable $e) {
             $errorResponse = new Response('Ошибка: ' . $e->getMessage(), 500);
             $errorResponse->send();
