@@ -9,11 +9,34 @@ use App\Core\Response;
 class Error
 {
     protected array $route = [];
+    protected string $layout = 'error';
 
     public function __construct(array $route)
     {
         $this->route = $route;
     }
+
+    public function renderError(array $data): Response
+    {
+        $view = new View();
+        $view->layout = $this->layout;
+
+        return new Response();
+    }
+
+    public function notfound(): Response
+    {
+        $data = [
+            'controller' => 'error',
+            'action' => 'notfound',
+        ];
+
+        return $this->renderError($data);
+    }
+
+
+
+
     static public function missing(NotFoundException $error): void
     {
         // http_response_code($error->getCode());

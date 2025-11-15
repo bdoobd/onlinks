@@ -8,19 +8,26 @@ use Throwable;
 
 class App
 {
+    public static App $app;
     public static string $ROOTPATH = '';
     public Router $router;
+    public Error $errorHandler;
     public string $url;
+    public bool $isDev = false;
 
     public function __construct(string $rootpath)
     {
         self::$ROOTPATH = $rootpath;
+        self::$app = $this;
+        $this->errorHandler = new Error();
         $this->router = new Router();
-
         $this->url = ltrim($_SERVER['REQUEST_URI'], '\/');
 
         $dotenv = Dotenv::createImmutable(App::$ROOTPATH);
         $dotenv->load();
+
+        $this->isDev = ($_ENV['DEVMODE'] ?? 'prod') === 'dev';
+        $this->logDir();
     }
 
     public function run(): void
@@ -28,19 +35,16 @@ class App
         try {
             $run = $this->router->dispatch($this->url);
             $run->send();
-        } catch (NotFoundException $e) {
-            \App\Controllers\Error::missing($e);
-        } catch (NoClass | NoAction $e) {
-            \App\Controllers\Error::linkError($e);
         } catch (Throwable $e) {
-            $errorResponse = new Response('Ошибка: ' . $e->getMessage(), 500);
-            $errorResponse->send();
+            $response = $this->errorHandler->handle($e);
+            $response->send();
         }
     }
 
-    // TESTS, DELETE AFTER USE
-    public function showURI(): string
+    private function logDir()
     {
-        return $this->url;
+        if (!file_exists(App::$ROOTPATH . '/logs')) {
+            mkdir(App::$ROOTPATH . '/logs', 0760, true);
+        }
     }
 }
