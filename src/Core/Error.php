@@ -2,6 +2,7 @@
 
 namespace App\Core;
 
+use App\Controllers\Error as ControllersError;
 use Throwable;
 
 class Error
@@ -14,33 +15,75 @@ class Error
         $this->viewPath = '/errors/';
         $this->logFile = App::$ROOTPATH . '/logs/' . ($_ENV['LOG_FILE'] ?? 'error.log');
     }
-
-    public function handle(Throwable $e): Response
+    /**
+     * Обработка исключений
+     * 
+     * @param Throwable $e Объект возникшего исключения
+     * 
+     * @return 
+     */
+    public function handle(Throwable $e)
     {
-        // TODO: Логировать ошибку
         $this->logError($e);
 
-        // TODO: Если режим разработки, показать подробную информацию об ошибке
         if (App::$app->isDev) {
             return $this->devResponse($e);
         }
 
-        // TODO: Иначе показать общую страницу ошибки
         return $this->prodResponse($e);
     }
-
+    /**
+     * Лонирование ошибки в файл
+     * 
+     * @param Throwable $e Объект возникшего исключения
+     * 
+     * @return void
+     */
     public function logError(Throwable $e): void
     {
-        // TODO: Error logger
-        $msg = '[' . date('Y-m-d H:i:s') . '] ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine() . PHP_EOL;
+        $msg = sprintf(
+            "[%s] %d %s in %s: line %d\n%s\n\n",
+            date('d-m-Y H:i:s'),
+            $e->getCode(),
+            $e->getMessage(),
+            $e->getFile(),
+            $e->getLine(),
+            $e->getTraceAsString()
+        );
+
         file_put_contents($this->logFile, $msg, FILE_APPEND);
     }
-
-    public function devResponse(Throwable $e): Response
+    /**
+     * Обработка исключения с отображением ошибки с стека в браузер
+     * 
+     * @param Throwable $e Объект возникшего исключения
+     * 
+     * @return
+     */
+    public function devResponse(Throwable $e)
     {
-        return new Response('Dev ошибка', $e->getCode());
-    }
+        $data = [
+            'message' => $e->getMessage(),
+            'line' => $e->getLine(),
+            'file' => $e->getFile(),
+            'trace' => $e->getTraceAsString(),
+            'code' => $e->getCode(),
+        ];
 
+        $controller = new ControllersError([
+            "controller" => "error",
+            "action" => "devError",
+        ]);
+
+        return $controller->renderDevError($data);
+    }
+    /**
+     * Обработка исключения с переадресацией на общую страницу ошибки в режиме продакшн
+     * 
+     * @param Throwable $e Объект возникшего исключения
+     * 
+     * @return Response Объект ответа с информацией об ошибке
+     */
     public function prodResponse(Throwable $e): Response
     {
         return new Response('Произошла ошибка. Пожалуйста, попробуйте позже.', $e->getCode());

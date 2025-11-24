@@ -14,9 +14,8 @@ class Categories
     }
     public function read(): Response
     {
-        // return ['first', 'second', 'third'];
-        // echo 'Successfully reading data ....';
         $view = new View($this->route);
+        $view->setTitle('Category section');
 
         $data = array(
             'route' => $this->route,

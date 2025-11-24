@@ -17,6 +17,7 @@ class Home
     public function index(): Response
     {
         $view = new View($this->route);
+        $view->setTitle('Home Page Title');
 
         $data = array(
             'route' => $this->route,

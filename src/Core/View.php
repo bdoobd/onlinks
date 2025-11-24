@@ -4,8 +4,9 @@ namespace App\Core;
 
 class View
 {
-    public string $layout = 'main';
+    protected string $layout = 'main';
     public array $route;
+    protected string $title = 'Default title, please set title';
 
     public function __construct(array $route = [])
     {
@@ -13,8 +14,6 @@ class View
     }
     public function render($data = []): string
     {
-        // $viewFile = $this->route;
-
         $layoutFile = App::$ROOTPATH . '/src/Views/layouts/' . $this->layout . '.php';
         $content = $this->renderContent($data);
 
@@ -34,5 +33,15 @@ class View
         include_once $viewFile;
 
         return ob_get_clean();
+    }
+
+    public function setTitle(string $title): void
+    {
+        $this->title = htmlspecialchars($title);
+    }
+
+    public function setLayout(string $layout): void
+    {
+        $this->layout = $layout;
     }
 }

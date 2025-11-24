@@ -56,7 +56,7 @@ class Router
             return new Response((string) $result);
         }
 
-        throw new NotFoundException();
+        throw new NotFoundException($url . ' not found, please check routes.');
     }
 
     /**

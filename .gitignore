@@ -2,3 +2,4 @@ vendor/
 
 .env
 note*
+error.log
