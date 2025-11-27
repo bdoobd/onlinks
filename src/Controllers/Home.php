@@ -2,22 +2,17 @@
 
 namespace App\Controllers;
 
+use App\Core\BaseController;
 use App\Core\Response;
 use App\Core\View;
 
-class Home
-
+class Home extends BaseController
 {
-    protected array $route = [];
-
-    public function __construct(array $route)
-    {
-        $this->route = $route;
-    }
     public function index(): Response
     {
         $view = new View($this->route);
         $view->setTitle('Home Page Title');
+        $view->setMeta('Working on PHP app project', 'Framework, PHP, WebAPP');
 
         $data = array(
             'route' => $this->route,

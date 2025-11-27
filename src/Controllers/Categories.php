@@ -2,16 +2,12 @@
 
 namespace App\Controllers;
 
+use App\Core\BaseController;
 use App\Core\Response;
 use App\Core\View;
 
-class Categories
+class Categories extends BaseController
 {
-    protected array $route = [];
-    public function __construct(array $route)
-    {
-        $this->route = $route;
-    }
     public function read(): Response
     {
         $view = new View($this->route);

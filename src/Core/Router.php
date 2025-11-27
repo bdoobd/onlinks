@@ -31,7 +31,7 @@ class Router
 
     public function dispatch(string $url): Response
     {
-        // TODO: Удалить параметры строки запроста (знаки после ?)
+        $url = $this->removeQueryString($url);
 
         if ($this->match($url)) {
             $controllerName = 'App\\Controllers\\' . ucfirst($this->params['controller']);;
@@ -96,5 +96,21 @@ class Router
 
         return False;
     }
-    // Private
+    /**
+     * Удаляет часть GET запроса из строки URL
+     * 
+     * @param string $url Строка $url
+     * 
+     * @return string Строка URL с удалённым GET запросом
+     */
+    protected function removeQueryString(string $url): string
+    {
+        if ($url) {
+            $chunks = explode('&', $url, 2);
+            if (false === strpos($chunks[0], '=')) {
+                return rtrim($chunks[0], '/');
+            }
+        }
+        return '';
+    }
 }

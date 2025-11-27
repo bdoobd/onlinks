@@ -2,18 +2,13 @@
 
 namespace App\Controllers;
 
+use App\Core\BaseController;
 use App\Core\View;
 use App\Core\Response;
 
-class Error
+class Error extends BaseController
 {
-    protected array $route;
     protected string $layout = 'error';
-
-    public function __construct(array $route = [])
-    {
-        $this->route = $route;
-    }
 
     public function renderDevError(array $data): Response
     {
