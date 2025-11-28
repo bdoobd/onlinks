@@ -21,7 +21,8 @@ class App
         self::$app = $this;
         $this->errorHandler = new Error();
         $this->router = new Router();
-        $this->url = ltrim($_SERVER['REQUEST_URI'], '\/');
+        // $this->url = ltrim($_SERVER['REQUEST_URI'], '\/');
+        $this->url = rtrim($_SERVER['QUERY_STRING'], '\/');
 
         $dotenv = Dotenv::createImmutable(App::$ROOTPATH);
         $dotenv->load();
