@@ -1,0 +1,230 @@
+:root {
+  --bg-color: rgba(220, 220, 220, 1);
+  --main-text-color: rgba(20, 20, 50, 1);
+  --header_bg: rgba(30, 30, 70, 1);
+  --header-text: rgba(230, 230, 200, 1);
+  --header-link: rgba(230, 230, 200, 0.7);
+  --dark-shadow: rgba(20, 20, 70, 0.75);
+  --content-block-bg: rgba(70, 70, 80, 1);
+  --content-text: rgba(220, 220, 200, 1);
+  --content-title: rgba(230, 230, 200, 1);
+  --content-title-bg: rgba(40, 40, 80, 1);
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--main-text-color);
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-size: 16px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.main-container {
+  display: grid;
+  /* gap: 1rem; */
+
+  grid-template-columns: 1fr minmax(min-content, 18rem);
+  grid-template-rows: min-content 1fr min-content;
+
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+.header,
+.footer {
+  grid-column: 1 / -1;
+  background-color: var(--header_bg);
+}
+
+.header {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  box-shadow: 5px 5px 20px var(--dark-shadow);
+  height: 4, 5rem;
+}
+
+main,
+aside {
+  margin-block-start: 6rem;
+  margin-block-end: 4rem;
+}
+/* Раздел header */
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  max-width: 80rem;
+  margin: 0 auto;
+
+  .logo {
+    color: var(--header-text);
+    font-size: 3rem;
+    font-weight: bold;
+    letter-spacing: -3px;
+  }
+
+  .nav {
+    transition: all 0.4s ease-in-out;
+  }
+
+  .menu-list {
+    display: flex;
+    column-gap: 0.75rem;
+  }
+
+  .menu-link {
+    color: var(--header-link);
+  }
+
+  .menu-link:hover,
+  .menu-link:active {
+    color: var(--header-text);
+  }
+}
+
+.hamburger {
+  display: none;
+  cursor: pointer;
+}
+
+.bar {
+  width: 2.5rem;
+  height: 0.25rem;
+  background-color: var(--header-text);
+  margin-block: 0.5rem;
+  transition: all 0.3s ease-in-out;
+}
+/* Раздел контента */
+main {
+  background-color: var(--bg-color);
+  padding: 0 0.5rem;
+
+  .main-content {
+    display: grid;
+    gap: 1rem;
+
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  }
+
+  .content-block {
+    background-color: var(--content-block-bg);
+    width: auto;
+    border-radius: 1.5rem;
+    box-shadow: 2px 2px 10px var(--dark-shadow);
+  }
+
+  .content-block-title {
+    background-color: var(--content-title-bg);
+    color: var(--content-title);
+    padding: 0.5rem 2rem;
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: bold;
+    border-radius: 1.5rem 1.5rem 0 0;
+  }
+
+  .content-block-links {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem;
+    gap: 0.5rem;
+    color: var(--content-text);
+    margin: 0;
+  }
+}
+/* Раздел боковой панели  */
+aside {
+  /* background-color: var(--bg-color); */
+  padding: 0 0.5rem;
+
+  .side-block {
+    display: flex;
+    flex-direction: column;
+  }
+
+  p {
+    /* background-color: lightblue; */
+    width: auto;
+    margin-block: 0 1rem;
+  }
+}
+/* Раздел подвала */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: var(--header-text);
+
+  .footer-content {
+    padding: 1rem;
+    max-width: 80rem;
+    margin: 0 auto;
+  }
+}
+
+/* MEDIA QUERIES */
+@media only screen and (max-width: 50rem) {
+  .main-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, min-content);
+  }
+
+  main {
+    margin-block-end: 0;
+  }
+
+  aside {
+    margin-block-start: 1rem;
+    margin-block-end: 3rem;
+  }
+}
+
+@media only screen and (max-width: 38rem) {
+  .nav {
+    position: fixed;
+    top: 4.5rem;
+    left: 0;
+    width: 100%;
+    background-color: var(--header_bg);
+    transform: translateX(-100%);
+  }
+
+  .menu-list {
+    /* padding-inline-start: 0;
+    margin-block: 0; */
+    flex-direction: column;
+    align-items: center;
+    row-gap: 1rem;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+
+/* JavaScript примочки */
+.open-menu {
+  transform: translate(0);
+}
+
+.hamburger-open .bar:nth-child(1) {
+  transform: translateY(0.75rem) rotate(45deg);
+}
+.hamburger-open .bar:nth-child(2) {
+  opacity: 0;
+}
+.hamburger-open .bar:nth-child(3) {
+  transform: translateY(-0.75rem) rotate(-45deg);
+}

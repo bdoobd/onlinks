@@ -9,29 +9,57 @@
     <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/assets/style/reset.css">
     <link rel="stylesheet" href="/assets/style/style.css">
+    <script defer src="/assets/js/header_menu.js"></script>
     <title><?= $this->title ?></title>
 </head>
 
 <body>
-
-    <head>
-        <h1>Header of page</h1>
-        <nav>
-            <ul>
-                <li><a href="">menu item</a></li>
-                <li><a href="">menu item</a></li>
-                <li><a href="">menu item</a></li>
-                <li><a href="">menu item</a></li>
-                <li><a href="">menu item</a></li>
-            </ul>
-        </nav>
-    </head>
-    <main>
-        {{content}}
-    </main>
-    <footer>
-        &cross; 2025;
-    </footer>
+    <div class="main-container">
+        <header class="header">
+            <div class="header-content">
+                <a class="logo" href="#">OnLk</a>
+                <nav class="nav">
+                    <ul class="menu-list">
+                        <li class="menu-item"><a href="#" class="menu-link">News</a></li>
+                        <li class="menu-item"><a href="#" class="menu-link">Blogs</a></li>
+                        <li class="menu-item"><a href="#" class="menu-link">Tech</a></li>
+                        <li class="menu-item"><a href="#" class="menu-link">Sport</a></li>
+                        <li class="menu-item"><a href="#" class="menu-link">Login</a></li>
+                    </ul>
+                </nav>
+                <div class="hamburger">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            </div>
+        </header>
+        <main>
+            {{content}}
+        </main>
+        <aside>
+            <div class="side-block">
+                <p><strong>10.12.2025</strong> Lorem ipsum dolor sit amet.</p>
+            </div>
+            <div class="side-block">
+                <p><strong>10.12.2025</strong> Lorem ipsum dolor sit amet.</p>
+            </div>
+            <div class="side-block">
+                <p><strong>10.12.2025</strong> Lorem ipsum dolor sit amet.</p>
+            </div>
+            <div class="side-block">
+                <p><strong>10.12.2025</strong> Lorem ipsum dolor sit amet.</p>
+            </div>
+            <div class="side-block">
+                <p><strong>10.12.2025</strong> Lorem ipsum dolor sit amet.</p>
+            </div>
+        </aside>
+        <footer class="footer">
+            <div class="footer-content">
+                <em>&cross; 2025; Lorem ipsum dolor sit amet.</em>
+            </div>
+        </footer>
+    </div>
 </body>
 
 </html>
