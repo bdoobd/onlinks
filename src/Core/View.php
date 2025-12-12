@@ -68,7 +68,7 @@ class View
      * 
      * @return void
      */
-    public function setMeta(string $description, string $keywords): void
+    public function setMeta(string $description = '', string $keywords = ''): void
     {
         $this->meta = array('description' => $description, 'keywords' => $keywords);
     }

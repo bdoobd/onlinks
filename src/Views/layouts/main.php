@@ -1,3 +1,9 @@
+<?php
+
+use App\Models\Categories;
+
+$categories = Categories::findAll();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,11 +26,14 @@
                 <a class="logo" href="#">OnLk</a>
                 <nav class="nav">
                     <ul class="menu-list">
-                        <li class="menu-item"><a href="#" class="menu-link">News</a></li>
+                        <?php foreach ($categories as $category) : ?>
+                            <li class="menu-item"><a href="/categories/<?= $category->action ?>" class="menu-link"><?= $category->name ?></a></li>
+                        <?php endforeach; ?>
+                        <!-- <li class="menu-item"><a href="categories/read" class="menu-link">News</a></li>
                         <li class="menu-item"><a href="#" class="menu-link">Blogs</a></li>
                         <li class="menu-item"><a href="#" class="menu-link">Tech</a></li>
-                        <li class="menu-item"><a href="#" class="menu-link">Sport</a></li>
-                        <li class="menu-item"><a href="#" class="menu-link">Login</a></li>
+                        <li class="menu-item"><a href="#" class="menu-link">Sport</a></li> -->
+                        <li class="menu-item"><a href="/auth/login" class="menu-link">Login</a></li>
                     </ul>
                 </nav>
                 <div class="hamburger">
@@ -53,6 +62,7 @@
             <div class="side-block">
                 <p><strong>10.12.2025</strong> Lorem ipsum dolor sit amet.</p>
             </div>
+            <?= $this->getMeta(); ?>
         </aside>
         <footer class="footer">
             <div class="footer-content">

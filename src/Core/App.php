@@ -11,6 +11,7 @@ class App
     public static App $app;
     public static string $ROOTPATH = '';
     public Router $router;
+    public DBH $db;
     public Error $errorHandler;
     public string $url;
     public bool $isDev = false;
@@ -21,7 +22,6 @@ class App
         self::$app = $this;
         $this->errorHandler = new Error();
         $this->router = new Router();
-        // $this->url = ltrim($_SERVER['REQUEST_URI'], '\/');
         $this->url = rtrim($_SERVER['QUERY_STRING'], '\/');
 
         $dotenv = Dotenv::createImmutable(App::$ROOTPATH);
@@ -29,6 +29,8 @@ class App
 
         $this->isDev = ($_ENV['DEVMODE'] ?? 'prod') === 'dev';
         $this->logDir();
+
+        $this->db = new DBH();
     }
 
     public function run(): void
