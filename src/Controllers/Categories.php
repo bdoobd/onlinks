@@ -4,42 +4,35 @@ namespace App\Controllers;
 
 use App\Core\App;
 use App\Core\BaseController;
+use App\Core\Model;
 use App\Core\Response;
 use App\Core\View;
+use App\Models\Blocks;
 use App\Models\Categories as ModelsCategories;
 use PDO;
 
 class Categories extends BaseController
 {
-    protected function mapCategoriesToActions(): array
-    {
-        return [
-            1 => 'index',
-            2 => 'blogs',
-            3 => 'tech',
-            4 => 'sport'
-        ];
-    }
-    public function read(): Response
-    {
-        $view = new View($this->route);
-        $view->setTitle('Category section');
-        // $view->setMeta('Working on PHP app project', 'Framework, PHP, WebAPP');
+    // public function read(): Response
+    // {
+    //     $view = new View($this->route);
+    //     $view->setTitle('Category section');
+    //     // $view->setMeta('Working on PHP app project', 'Framework, PHP, WebAPP');
 
 
-        $model = ModelsCategories::findAll();
+    //     $model = ModelsCategories::findAll();
 
-        $data = array(
-            'route' => $this->route,
-            'title' => 'Category section',
-            'header' => 'Categories Read Header',
-            'model' => $model,
-        );
+    //     $data = array(
+    //         'route' => $this->route,
+    //         'title' => 'Category section',
+    //         'header' => 'Categories Read Header',
+    //         'model' => $model,
+    //     );
 
-        $markup = $view->render($data);
+    //     $markup = $view->render($data);
 
-        return new Response($markup);
-    }
+    //     return new Response($markup);
+    // }
 
     public function index(): Response
     {
@@ -47,9 +40,11 @@ class Categories extends BaseController
         $view->setTitle('Category index');
         $view->setMeta('Working on PHP app project', 'Framework, PHP, WebAPP');
 
+        $blocks = Blocks::findMany(['catid' => $this->route['id']]);
 
         $data = [
-            'info' => 'Showing category index',
+            'info' => 'HOME section',
+            'blocks' => $blocks,
         ];
 
         $markup = $view->render($data);
@@ -59,15 +54,54 @@ class Categories extends BaseController
 
     public function blogs(): Response
     {
-        return new Response('blog action');
+        $view = new View($this->route);
+        $view->setTitle('Blogs section');
+        $view->setMeta('Working on PHP app project', 'Framework, PHP, WebAPP');
+
+        $blocks = Blocks::findMany(['catid' => $this->route['id']]);
+
+        $data = [
+            'info' => 'Blogs section',
+            'blocks' => $blocks,
+        ];
+
+        $markup = $view->render($data);
+
+        return new Response($markup);
     }
 
     public function tech(): Response
     {
-        return new Response('tech action');
+        $view = new View($this->route);
+        $view->setTitle('Tech section');
+        $view->setMeta('Working on PHP app project', 'Framework, PHP, WebAPP');
+
+        $blocks = Blocks::findMany(['catid' => $this->route['id']]);
+
+        $data = [
+            'info' => 'Tech section',
+            'blocks' => $blocks,
+        ];
+
+        $markup = $view->render($data);
+
+        return new Response($markup);
     }
     public function sport(): Response
     {
-        return new Response('sport action');
+        $view = new View($this->route);
+        $view->setTitle('Tech section');
+        $view->setMeta('Working on PHP app project', 'Framework, PHP, WebAPP');
+
+        $blocks = Blocks::findMany(['catid' => $this->route['id']]);
+
+        $data = [
+            'info' => 'Sport section',
+            'blocks' => $blocks,
+        ];
+
+        $markup = $view->render($data);
+
+        return new Response($markup);
     }
 }

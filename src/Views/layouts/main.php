@@ -27,7 +27,7 @@ $categories = Categories::findAll();
                 <nav class="nav">
                     <ul class="menu-list">
                         <?php foreach ($categories as $category) : ?>
-                            <li class="menu-item"><a href="/categories/<?= $category->action ?>" class="menu-link"><?= $category->name ?></a></li>
+                            <li class="menu-item"><a href="/categories/<?= $category->id ?>/<?= $category->action ?>" class="menu-link"><?= $category->name ?></a></li>
                         <?php endforeach; ?>
                         <!-- <li class="menu-item"><a href="categories/read" class="menu-link">News</a></li>
                         <li class="menu-item"><a href="#" class="menu-link">Blogs</a></li>

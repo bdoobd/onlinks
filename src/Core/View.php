@@ -12,7 +12,7 @@ class View
     public function __construct(array $route = [])
     {
         $this->route = $route;
-        $this->meta = array('description' => 'Default project\'s description', 'keywords' => 'Please set keywords for project app');
+        $this->meta = array('description' => 'Default description of project', 'keywords' => 'Please set keywords for project app');
     }
     /**
      * Сборка шаблона и динамического содержания для отображения
