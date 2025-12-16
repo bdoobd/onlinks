@@ -3,7 +3,7 @@
     <div class="block-section">
         <ul class="block-list">
             <?php foreach ($blocks as $block) : ?>
-                <li class="block-item">BlockID <?= $block->id ?> / CatID <?= $block->catid ?>: Name <?= $block->name ?> at position <?= $block->itemnum ?></li>
+                <li class="block-item">BlockID <?= $block->blockId ?> / name <?= $block->block ?>: link ID <?= $block->linkId ?> link name <?= $block->item ?> url <?= $block->link ?><br></li>
             <?php endforeach; ?>
         </ul>
     </div>

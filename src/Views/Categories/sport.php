@@ -7,4 +7,16 @@
             <?php endforeach; ?>
         </ul>
     </div>
+    <div class="block-section">
+        <!-- <ul class="block-list">
+            <?php foreach ($blocks as $block) : ?>
+                <li class="block-item">BlockID <?= $block->id ?> / CatID <?= $block->catid ?>: Name <?= $block->name ?> at position <?= $block->itemnum ?></li>
+            <?php endforeach; ?>
+        </ul> -->
+        <?php
+        echo '<pre>';
+        var_dump($more_blocks);
+        echo '</pre>';
+        ?>
+    </div>
 </div>

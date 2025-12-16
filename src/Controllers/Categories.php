@@ -40,7 +40,8 @@ class Categories extends BaseController
         $view->setTitle('Category index');
         $view->setMeta('Working on PHP app project', 'Framework, PHP, WebAPP');
 
-        $blocks = Blocks::findMany(['catid' => $this->route['id']]);
+        // $blocks = Blocks::findMany(['catid' => $this->route['id']]);
+        $blocks = Blocks::runPrepQuery($this->createSQLString(), ['id' => $this->route['id']]);
 
         $data = [
             'info' => 'HOME section',
@@ -93,7 +94,8 @@ class Categories extends BaseController
         $view->setTitle('Tech section');
         $view->setMeta('Working on PHP app project', 'Framework, PHP, WebAPP');
 
-        $blocks = Blocks::findMany(['catid' => $this->route['id']]);
+
+        $blocks = Blocks::runPrepQuery($this->createSQLString(), ['id' => $this->route['id']]);
 
         $data = [
             'info' => 'Sport section',
@@ -103,5 +105,16 @@ class Categories extends BaseController
         $markup = $view->render($data);
 
         return new Response($markup);
+    }
+    /**
+     * Получить строку для выборки блоков с фильтром по категориям
+     * 
+     * @return string
+     */
+    protected function createSQLString(): string
+    {
+        return "SELECT b.id as blockId, b.name as block, l.id as linkId, l.name as item, l.link FROM blocks as b  
+                JOIN links as l ON 
+                b.id = l.blockid WHERE b.catid = :id";
     }
 }

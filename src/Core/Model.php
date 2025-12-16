@@ -4,20 +4,13 @@ namespace App\Core;
 
 use App\Exceptions\NoProperty;
 use App\Exceptions\NoPropertyException;
+use PDO;
 use PDOStatement;
 
 abstract class Model
 {
     abstract public static function tableName(): string;
 
-    // public function loadData(array $data): void
-    // {
-    //     foreach ($data as $key => $value) {
-    //         if (property_exists($this, $key)) {
-    //             $this->{$key} = $value;
-    //         }
-    //     }
-    // }
     /**
      * Локальная ссылка на метод класса DBH. Использовать только для выборки всех данных из db. 
      * ВНИМАНИЕ! Не использует подготовленные запросы, внешние данные в строку sql не передавать
@@ -93,6 +86,30 @@ abstract class Model
         $stmt->execute();
 
         return $stmt->fetchAll(\PDO::FETCH_CLASS, static::class);
+    }
+    /**
+     * Выборка данных с помощью мануального запроста SQL
+     * Если строка SQL содержит фильтр, данные фильтрации указываюстя в массив params
+     * 
+     * @param string $sql Строка запроста SQL
+     * @param array $params Параметры для подготовленного запрста в формате
+     *                      ['placeholder' => 'v<lue']
+     * 
+     * @return array Массив найженых значений
+     */
+    public static function runPrepQuery(string $sql, array $params = []): array
+    {
+        $stmt = self::prepare($sql);
+
+        if (!empty($params)) {
+            foreach ($params as $key => $value) {
+                $stmt->bindValue($key, $value);
+            }
+        }
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
     // Private properties
