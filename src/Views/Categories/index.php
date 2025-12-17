@@ -1,10 +1,12 @@
 <div class="main-content">
-    <div class="head-title"><?= $info ?></div>
-    <div class="block-section">
-        <ul class="block-list">
-            <?php foreach ($blocks as $block) : ?>
-                <li class="block-item">BlockID <?= $block->blockId ?> / name <?= $block->block ?>: link ID <?= $block->linkId ?> link name <?= $block->item ?> url <?= $block->link ?><br></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
+    <?php foreach ($data as $block) : ?>
+        <div class="content-block">
+            <h2 class="content-block-title"><?= $block['name'] ?></h2>
+            <ul class="content-block-links">
+                <?php foreach ($block['links'] as $item) : ?>
+                    <li class="content-block-item"><a href="<?= $item['url'] ?>" class="content-block-link"><?= $item['name'] ?></a></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endforeach; ?>
 </div>

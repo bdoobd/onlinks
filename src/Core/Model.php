@@ -70,7 +70,13 @@ abstract class Model
 
         return $stmt->fetchObject(static::class);
     }
-
+    /**
+     * Выборка нескольких записей из базы дынных по фильтру
+     * 
+     * @param array $filter Массив критериев фильтрации формата ['placeholder' => 'value']
+     * 
+     * @return array Массив объектов
+     */
     public static function findMany(array $filter): array
     {
         $tableName = static::tableName();

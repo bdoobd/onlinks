@@ -13,39 +13,17 @@ use PDO;
 
 class Categories extends BaseController
 {
-    // public function read(): Response
-    // {
-    //     $view = new View($this->route);
-    //     $view->setTitle('Category section');
-    //     // $view->setMeta('Working on PHP app project', 'Framework, PHP, WebAPP');
-
-
-    //     $model = ModelsCategories::findAll();
-
-    //     $data = array(
-    //         'route' => $this->route,
-    //         'title' => 'Category section',
-    //         'header' => 'Categories Read Header',
-    //         'model' => $model,
-    //     );
-
-    //     $markup = $view->render($data);
-
-    //     return new Response($markup);
-    // }
-
     public function index(): Response
     {
         $view = new View($this->route);
         $view->setTitle('Category index');
         $view->setMeta('Working on PHP app project', 'Framework, PHP, WebAPP');
 
-        // $blocks = Blocks::findMany(['catid' => $this->route['id']]);
         $blocks = Blocks::runPrepQuery($this->createSQLString(), ['id' => $this->route['id']]);
 
         $data = [
             'info' => 'HOME section',
-            'blocks' => $blocks,
+            'data' => $this->formatData($blocks),
         ];
 
         $markup = $view->render($data);
@@ -59,11 +37,11 @@ class Categories extends BaseController
         $view->setTitle('Blogs section');
         $view->setMeta('Working on PHP app project', 'Framework, PHP, WebAPP');
 
-        $blocks = Blocks::findMany(['catid' => $this->route['id']]);
+        $blocks = Blocks::runPrepQuery($this->createSQLString(), ['id' => $this->route['id']]);
 
         $data = [
             'info' => 'Blogs section',
-            'blocks' => $blocks,
+            'data' => $this->formatData($blocks),
         ];
 
         $markup = $view->render($data);
@@ -77,11 +55,11 @@ class Categories extends BaseController
         $view->setTitle('Tech section');
         $view->setMeta('Working on PHP app project', 'Framework, PHP, WebAPP');
 
-        $blocks = Blocks::findMany(['catid' => $this->route['id']]);
+        $blocks = Blocks::runPrepQuery($this->createSQLString(), ['id' => $this->route['id']]);
 
         $data = [
             'info' => 'Tech section',
-            'blocks' => $blocks,
+            'data' => $this->formatData($blocks),
         ];
 
         $markup = $view->render($data);
@@ -99,7 +77,7 @@ class Categories extends BaseController
 
         $data = [
             'info' => 'Sport section',
-            'blocks' => $blocks,
+            'data' => $this->formatData($blocks),
         ];
 
         $markup = $view->render($data);
@@ -111,10 +89,40 @@ class Categories extends BaseController
      * 
      * @return string
      */
-    protected function createSQLString(): string
+    private function createSQLString(): string
     {
         return "SELECT b.id as blockId, b.name as block, l.id as linkId, l.name as item, l.link FROM blocks as b  
                 JOIN links as l ON 
                 b.id = l.blockid WHERE b.catid = :id";
+    }
+    /**
+     * Отформатировать массив полученых из базы данных для передачи в шаблон
+     * 
+     * @param array $fetched Массив полученный после запроса к базе данных
+     * 
+     * @return array
+     */
+    private function formatData(array $fetched): array
+    {
+        $tmpArray = [];
+        foreach ($fetched as $block) {
+            $blockId = $block->blockId;
+
+            if (!isset($tmpArray[$blockId])) {
+                $tmpArray[$blockId] = [
+                    'blockId' => $blockId,
+                    'name' => $block->block,
+                    'links' => [],
+                ];
+            }
+
+            $tmpArray[$blockId]['links'][] = [
+                'linkId' => $block->linkId,
+                'name' => $block->item,
+                'url' => $block->link,
+            ];
+        }
+
+        return array_values($tmpArray);
     }
 }

@@ -6,6 +6,7 @@
   --header-link: rgba(230, 230, 200, 0.7);
   --dark-shadow: rgba(20, 20, 70, 0.75);
   --content-block-bg: rgba(70, 70, 80, 1);
+  --content-link: rgba(230, 230, 200, 0.7);
   --content-text: rgba(220, 220, 200, 1);
   --content-title: rgba(230, 230, 200, 1);
   --content-title-bg: rgba(40, 40, 80, 1);
@@ -129,7 +130,7 @@ main {
     color: var(--content-title);
     padding: 0.5rem 2rem;
     margin: 0;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: bold;
     border-radius: 1.5rem 1.5rem 0 0;
   }
@@ -137,10 +138,21 @@ main {
   .content-block-links {
     display: flex;
     flex-direction: column;
-    padding: 1rem 2rem;
+    padding: 1rem 2rem 2rem;
     gap: 0.5rem;
-    color: var(--content-text);
     margin: 0;
+  }
+
+  .content-block-links a {
+    display: block;
+    color: var(--content-link);
+    font-size: 1rem;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .content-block-links a:hover {
+    color: var(--content-text);
+    transform: scale(1.1);
   }
 }
 /* Раздел боковой панели  */
