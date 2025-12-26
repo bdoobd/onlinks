@@ -44,6 +44,7 @@ class Categories extends BaseController
             'data' => $this->formatData($blocks),
         ];
 
+
         $markup = $view->render($data);
 
         return new Response($markup);

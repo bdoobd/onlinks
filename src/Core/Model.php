@@ -115,7 +115,8 @@ abstract class Model
 
         $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $stmt->fetchAll(PDO::FETCH_CLASS, static::class);
+        // return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
     // Private properties

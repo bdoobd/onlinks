@@ -29,7 +29,7 @@ $categories = Categories::findAll();
                         <?php foreach ($categories as $category) : ?>
                             <li class="menu-item"><a href="/categories/<?= $category->id ?>/<?= $category->action ?>" class="menu-link"><?= $category->name ?></a></li>
                         <?php endforeach; ?>
-                        <li class="menu-item"><a href="/auth/login" class="menu-link">Login</a></li>
+                        <li class="menu-item"><a href="/user/login" class="menu-link">Login</a></li>
                     </ul>
                 </nav>
                 <div class="hamburger">

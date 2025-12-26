@@ -4,6 +4,7 @@ namespace App\Core;
 
 use Dotenv\Dotenv;
 use App\Exceptions\{NotFoundException, NoAction, NoClass};
+use App\Models\User;
 use Throwable;
 
 class App
@@ -13,6 +14,8 @@ class App
     public Router $router;
     public DBH $db;
     public Error $errorHandler;
+    public Session $session;
+    public ?User $user;
     public string $url;
     public bool $isDev = false;
 
@@ -20,6 +23,7 @@ class App
     {
         self::$ROOTPATH = $rootpath;
         self::$app = $this;
+        $this->user = null;
         $this->errorHandler = new Error();
         $this->router = new Router();
         $this->url = rtrim($_SERVER['QUERY_STRING'], '\/');
@@ -31,6 +35,7 @@ class App
         $this->logDir();
 
         $this->db = new DBH();
+        $this->session = new Session();
     }
 
     public function run(): void
