@@ -12,6 +12,8 @@ class App
     public static App $app;
     public static string $ROOTPATH = '';
     public Router $router;
+    public Request $request;
+    public Response $response;
     public DBH $db;
     public Error $errorHandler;
     public Session $session;
@@ -25,7 +27,8 @@ class App
         self::$app = $this;
         $this->user = null;
         $this->errorHandler = new Error();
-        $this->router = new Router();
+        $this->request = new Request();
+        $this->router = new Router($this->request);
         $this->url = rtrim($_SERVER['QUERY_STRING'], '\/');
 
         $dotenv = Dotenv::createImmutable(App::$ROOTPATH);

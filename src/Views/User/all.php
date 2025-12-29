@@ -2,7 +2,7 @@
     <h1>User list</h1>
 
     <table class="users">
-        <caption><a class="new btn" href="/user/new">Add user</a></caption>
+        <caption><a class="new btn" href="/user/add">Add user</a></caption>
         <thead>
             <tr>
                 <th class="id">ID</th>

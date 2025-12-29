@@ -9,6 +9,12 @@ class Router
 {
     private array $routes = [];
     private array $params = [];
+    protected Request $request;
+
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
 
     /**
      * Добавляет шаблоны маршрутов в таблицу маршрутизации
@@ -47,7 +53,7 @@ class Router
                 throw new NoAction();
             }
 
-            $result = call_user_func([$controller, $action], $this->params);
+            $result = call_user_func([$controller, $action], $this->request);
 
             if ($result instanceof Response) {
                 return $result;

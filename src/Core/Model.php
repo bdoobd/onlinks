@@ -115,8 +115,8 @@ abstract class Model
 
         $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_CLASS, static::class);
-        // return $stmt->fetchAll(PDO::FETCH_OBJ);
+        // return $stmt->fetchAll(PDO::FETCH_CLASS, static::class);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
     // Private properties
@@ -132,5 +132,14 @@ abstract class Model
         $clause = implode(' AND ', array_map(fn($item) => "$item = :$item", $attributes));
 
         return $clause;
+    }
+
+    public function loadData(array $data): void
+    {
+        foreach ($data as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->{$key} = $value;
+            }
+        }
     }
 }

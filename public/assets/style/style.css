@@ -193,7 +193,7 @@ main {
     color: var(--header-text);
   }
 
-  .users td:nth-child(2) {
+  .users tr•:nth-child(2) {
     background-color: var(--content-link);
   }
 

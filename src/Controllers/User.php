@@ -2,9 +2,11 @@
 
 namespace App\Controllers;
 
-use App\Core\BaseController;
-use App\Core\Response;
+use App\Core\App;
 use App\Core\View;
+use App\Core\Request;
+use App\Core\Response;
+use App\Core\BaseController;
 use App\Models\User as ModelsUser;
 
 class User extends BaseController
@@ -26,8 +28,41 @@ class User extends BaseController
         return new Response($markup);
     }
 
-    public function new(): Response
+    public function add(Request $request): Response
     {
-        return new Response('Add new user');
+        $view = new View($this->route);
+        $view->setTitle('Register new user');
+        $view->setMeta('Register new user', 'add new register');
+
+        $data = [
+            'register' => 'register',
+        ];
+
+        if ($request->isPost()) {
+            $user = new ModelsUser();
+
+            $user->loadData($request->getRequestBody());
+
+            $data['formData'] = $user;
+        }
+
+        $markup = $view->render($data);
+
+        return new Response($markup);
+    }
+
+    public function login(): Response
+    {
+        $view = new View($this->route);
+        $view->setTitle('User login');
+        $view->setMeta('User login page', 'login get access let me in');
+
+        $data = [
+            'login' => 'loginForm',
+        ];
+
+        $markup = $view->render($data);
+
+        return new Response($markup);
     }
 }
