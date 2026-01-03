@@ -34,17 +34,23 @@ class User extends BaseController
         $view->setTitle('Register new user');
         $view->setMeta('Register new user', 'add new register');
 
-        $data = [
-            'register' => 'register',
-        ];
+        $user = new ModelsUser();
 
         if ($request->isPost()) {
-            $user = new ModelsUser();
 
             $user->loadData($request->getRequestBody());
 
-            $data['formData'] = $user;
+            if ($user->validate() && $user->save()) {
+                // TODO: Если всё в порядке, отобразить пользователю уведомление и переадресовать в раздел со списком пользователей
+                App::$app->response->redirect('/user/all');
+
+                exit();
+            }
         }
+
+        $data = [
+            'model' => $user,
+        ];
 
         $markup = $view->render($data);
 

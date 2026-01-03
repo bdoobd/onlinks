@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Core\Model;
+use App\Core\DBModel;
 
-class Blocks extends Model
+class Blocks extends DBModel
 {
     public int $id;
     public int $catid;

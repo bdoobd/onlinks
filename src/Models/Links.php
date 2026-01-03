@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Core\Model;
+use App\Core\DBModel;
 
-class Links extends Model
+class Links extends DBModel
 {
     public int $id;
     public int $blockid;

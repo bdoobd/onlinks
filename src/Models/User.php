@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use App\Core\Model;
-use DateTime;
+use App\Core\DBModel;
 
-class User extends Model
+class User extends DBModel
 {
     public int $id;
     public string $name;
@@ -17,6 +16,29 @@ class User extends Model
     {
         return 'usrs';
     }
+
+    public function labels(): array
+    {
+        return [
+            'name' => 'Имя пользователя',
+            'pwd' => 'Пароль',
+            'confirm_pwd' => 'Подтверждение пароля',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return ['name', 'pwd'];
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name' => [self::RULE_REQUIRED],
+            'pwd' => [self::RULE_REQUIRED],
+            'confirm_pwd' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'pwd']],
+        ];
+    }
     public static function showAll(): array
     {
         $sql = 'SELECT id, name, created FROM ' . self::tableName();
@@ -24,5 +46,12 @@ class User extends Model
         $users = User::runPrepQuery($sql);
 
         return $users;
+    }
+
+    public function save(): bool
+    {
+        $this->pwd = password_hash($this->pwd, PASSWORD_DEFAULT);
+
+        return parent::save();
     }
 }

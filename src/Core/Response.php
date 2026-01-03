@@ -64,4 +64,14 @@ class Response
     {
         return $this->content;
     }
+    /**
+     * Переадресация на указанные $url
+     * 
+     * @param string $url Ресурс для переадресации
+     * @return void
+     */
+    public function redirect(string $url): void
+    {
+        header("Location: $url");
+    }
 }

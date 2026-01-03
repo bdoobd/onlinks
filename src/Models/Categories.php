@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Core\Model;
+use App\Core\DBModel;
 
-class Categories extends Model
+class Categories extends DBModel
 {
     public int $id;
     public string $name;

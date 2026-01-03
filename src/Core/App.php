@@ -28,6 +28,7 @@ class App
         $this->user = null;
         $this->errorHandler = new Error();
         $this->request = new Request();
+        $this->response = new Response();
         $this->router = new Router($this->request);
         $this->url = rtrim($_SERVER['QUERY_STRING'], '\/');
 

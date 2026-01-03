@@ -10,6 +10,12 @@
   --content-text: rgba(220, 220, 200, 1);
   --content-title: rgba(230, 230, 200, 1);
   --content-title-bg: rgba(40, 40, 80, 1);
+  --danger: rgb(250, 50, 50);
+  --warning: rgba(250, 250, 50, 1);
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
@@ -204,7 +210,6 @@ main {
 }
 /* Раздел боковой панели  */
 aside {
-  /* background-color: var(--bg-color); */
   padding: 0 0.5rem;
 
   .side-block {
@@ -213,7 +218,6 @@ aside {
   }
 
   p {
-    /* background-color: lightblue; */
     width: auto;
     margin-block: 0 1rem;
   }
@@ -233,6 +237,42 @@ footer {
   }
 }
 
+/* Раздел формы */
+.form {
+  width: 100%;
+
+  fieldset {
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+  }
+
+  label,
+  input {
+    display: block;
+    margin-block-end: 0.5rem;
+    font-size: 1.2rem;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.25rem;
+    border-radius: 0.5rem;
+  }
+
+  button {
+    padding: 0.5rem 2rem;
+    font-size: 1.4rem;
+    border-radius: 0.5rem;
+    margin-block-start: 1rem;
+  }
+
+  .invalid {
+    color: var(--danger);
+    text-align: right;
+  }
+}
 /* MEDIA QUERIES */
 @media only screen and (max-width: 50rem) {
   .main-container {
