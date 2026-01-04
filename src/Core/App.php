@@ -23,6 +23,7 @@ class App
 
     public function __construct(string $rootpath)
     {
+        $this->session = new Session();
         self::$ROOTPATH = $rootpath;
         self::$app = $this;
         $this->user = null;
@@ -39,7 +40,11 @@ class App
         $this->logDir();
 
         $this->db = new DBH();
-        $this->session = new Session();
+
+        $findUser = $this->session->get('user');
+        if (!$findUser) {
+            TODO:
+        }
     }
 
     public function run(): void

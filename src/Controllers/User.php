@@ -42,6 +42,7 @@ class User extends BaseController
 
             if ($user->validate() && $user->save()) {
                 // TODO: Если всё в порядке, отобразить пользователю уведомление и переадресовать в раздел со списком пользователей
+                App::$app->session->setPopup('success', 'Пользователь успешно добавлен');
                 App::$app->response->redirect('/user/all');
 
                 exit();

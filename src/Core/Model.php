@@ -10,8 +10,9 @@ class Model
     const RULE_REQUIRED = 'required';
     const RULE_URL = 'url';
     const RULE_MATCH = 'match';
-
-    const RULE_NOEMPTY = 'noempty';
+    const RULE_UNIQUE = 'unique';
+    const RULE_MIN = 'min';
+    const RULE_MAX = 'max';
     public function attributes(): array
     {
         return [];
@@ -58,6 +59,30 @@ class Model
                 if ($ruleName === self::RULE_MATCH && $value !== $this->{$rule['match']}) {
                     $this->addErrorByRule($attribute, self::RULE_MATCH, ['match' => $this->getLabel($rule['match'])]);
                 }
+
+                if ($ruleName === self::RULE_MIN && strlen($value) < $rule['min']) {
+                    $this->addErrorByRule($attribute, self::RULE_MIN, ['min' => $rule['min']]);
+                }
+
+                if ($ruleName === self::RULE_MAX && strlen($value) > $rule['max']) {
+                    $this->addErrorByRule($attribute, self::RULE_MAX, ['max' => $rule['max']]);
+                }
+
+                if ($ruleName === self::RULE_UNIQUE) {
+                    $class = $rule['class'];
+                    $table = $class::tableName();
+                    $unique = $rule['attribute'] ?? $attribute;
+                    $db = App::$app->db;
+                    $sql = "SELECT * FROM $table WHERE $unique = :$unique";
+                    $stmt = $db->prepare($sql);
+                    $stmt->bindValue("$unique", $value);
+                    $stmt->execute();
+
+                    $found = $stmt->fetchObject();
+                    if ($found) {
+                        $this->addErrorByRule($attribute, self::RULE_UNIQUE);
+                    }
+                }
             }
         }
 
@@ -82,7 +107,9 @@ class Model
             self::RULE_REQUIRED => 'Данное поле является обязательным',
             self::RULE_URL => 'Значение поля должно содержать URL ссылку',
             self::RULE_MATCH => 'Значение должно совпадать со зачением поля "{match}"',
-            self::RULE_NOEMPTY => 'Данное поле не должно быть пустым',
+            self::RULE_UNIQUE => 'Значение поля {field} уже существует',
+            self::RULE_MIN => 'Минимальное количество знаков для данного поля {min}',
+            self::RULE_MAX => 'Максимальное количество знаков для данного поля {max}',
         ];
     }
 
@@ -93,7 +120,6 @@ class Model
 
     public function getErrorFirst(string $attribute): string
     {
-        // return $this->errors[$attribute] ?? '';
         $error = $this->errors[$attribute] ?? [];
 
         return $error[0] ?? '';

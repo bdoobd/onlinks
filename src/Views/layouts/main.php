@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Categories;
+use App\Core\App;
 
 $categories = Categories::findAll();
 ?>
@@ -40,6 +41,13 @@ $categories = Categories::findAll();
             </div>
         </header>
         <main>
+            <?php if (App::$app->session->hasPopups()): ?>
+                <div class="popup">
+                    <div class="popup-message <?= App::$app->session->getPopupKey() ?>">
+                        <div class="popup-item"><?= App::$app->session->getPopup() ?></div>
+                    </div>
+                </div>
+            <?php endif; ?>
             {{content}}
         </main>
         <aside>
