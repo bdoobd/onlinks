@@ -3,7 +3,6 @@
 namespace App\Core;
 
 use Dotenv\Dotenv;
-use App\Exceptions\{NotFoundException, NoAction, NoClass};
 use App\Models\User;
 use Throwable;
 
@@ -41,12 +40,51 @@ class App
 
         $this->db = new DBH();
 
-        $findUser = $this->session->get('user');
-        if (!$findUser) {
-            TODO:
+        $foundUser = $this->session->get('user');
+        if ($foundUser) {
+            $this->user = User::findOne(['id' => $foundUser]);
+        } else {
+            $this->user = null;
         }
     }
+    /**
+     * Создать переменную сессии для пользователя и записать в ней данные о пользователе
+     * 
+     * @param User $user Данные валидированного пользователя
+     * 
+     * @return void
+     */
+    public function login(User $user): bool
+    {
+        $this->user = $user;
+        $this->session->set('user', $user->id);
 
+        return true;
+    }
+    /**
+     * Удаляет данные пользователя из сессии и разлогинивает его
+     * 
+     * @return void
+     */
+    public function logout(): void
+    {
+        $this->user = null;
+        $this->session->remove('user');
+    }
+    /**
+     * Проверка прошёл ли пользователь аутентификацию
+     * 
+     * @return bool
+     */
+    public static function isGuest(): bool
+    {
+        return !self::$app->user;
+    }
+    /**
+     * Запускает приложение, обрабатывает запросы и возвращает ответы
+     * 
+     * @return void
+     */
     public function run(): void
     {
         try {
@@ -57,7 +95,11 @@ class App
             $response->send();
         }
     }
-
+    /**
+     * Создаёт директорию для логов, если её нет
+     * 
+     * @return void
+     */
     private function logDir()
     {
         if (!file_exists(App::$ROOTPATH . '/logs')) {

@@ -30,7 +30,11 @@ $categories = Categories::findAll();
                         <?php foreach ($categories as $category) : ?>
                             <li class="menu-item"><a href="/categories/<?= $category->id ?>/<?= $category->action ?>" class="menu-link"><?= $category->name ?></a></li>
                         <?php endforeach; ?>
-                        <li class="menu-item"><a href="/user/login" class="menu-link">Login</a></li>
+                        <?php if (!App::$app->user): ?>
+                            <li class="menu-item"><a href="/user/login" class="menu-link">Login</a></li>
+                        <?php else: ?>
+                            <li class="menu-item"><a href="/user/logout" class="menu-link"><?= App::$app->user->getUserName() ?> [logout]</a></li>
+                        <?php endif; ?>
                     </ul>
                 </nav>
                 <div class="hamburger">

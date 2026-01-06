@@ -101,6 +101,11 @@ class Model
         $this->errors[$attribute][] = $messageString;
     }
 
+    protected function addError(string $attribute, string $message): void
+    {
+        $this->errors[$attribute][] = $message;
+    }
+
     protected function errorMessages(): array
     {
         return [

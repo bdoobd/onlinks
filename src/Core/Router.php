@@ -40,7 +40,8 @@ class Router
         $url = $this->removeQueryString($url);
 
         if ($this->match($url)) {
-            $controllerName = 'App\\Controllers\\' . ucfirst($this->params['controller']);;
+            // $controllerName = 'App\\Controllers\\' . ucfirst($this->params['controller']);;
+            $controllerName = $this->getNamespace() . ucfirst($this->params['controller']);;
             $action = $this->params['action'];
 
             if (!class_exists($controllerName)) {
@@ -51,6 +52,10 @@ class Router
 
             if (!method_exists($controller, $action)) {
                 throw new NoAction();
+            }
+
+            foreach ($controller->getMiddlewares() as $middleware) {
+                $middleware->run($action);
             }
 
             $result = call_user_func([$controller, $action], $this->request);
@@ -96,11 +101,11 @@ class Router
                 }
 
                 $this->params = $params;
-                return True;
+                return true;
             }
         }
 
-        return False;
+        return false;
     }
     /**
      * Удаляет часть GET запроса из строки URL
@@ -118,5 +123,16 @@ class Router
             }
         }
         return '';
+    }
+
+    protected function getNamespace(): string
+    {
+        $namespace = 'App\Controllers\\';
+
+        if (array_key_exists('namespace', $this->params)) {
+            $namespace .= $this->params['namespace'] . '\\';
+        }
+
+        return $namespace;
     }
 }

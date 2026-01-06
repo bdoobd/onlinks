@@ -76,8 +76,8 @@ class View
     public function getMeta(): string
     {
         $metadata = <<<DTR
-        <meta name='description' content='<?= {$this->meta['description']} ?>'>
-        <meta name='keywords' content='<?= {$this->meta['keywords']} ?>'
+        <meta name='description' content='{$this->meta['description']}'>
+        <meta name='keywords' content='{$this->meta['keywords']}'>
         DTR;
 
         return $metadata;

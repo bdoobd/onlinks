@@ -54,4 +54,9 @@ class User extends DBModel
 
         return parent::save();
     }
+
+    public function getUserName(): string
+    {
+        return ucfirst($this->name);
+    }
 }
