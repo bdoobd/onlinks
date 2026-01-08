@@ -20,8 +20,9 @@ class User extends BaseController
     public function all(): Response
     {
         $view = new View($this->route);
-        $view->setTitle('List of all users');
-        $view->setMeta('All user listing', 'users, list users, accounts');
+        $view->setLayout(layout: 'admin');
+        $view->setTitle('Список всех пользователей');
+        $view->setMeta('Выборка всех пользователей', 'users, list users, accounts');
 
         $users = ModelsUser::showAll();
 
@@ -37,8 +38,10 @@ class User extends BaseController
     public function add(Request $request): Response
     {
         $view = new View($this->route);
-        $view->setTitle('Register new user');
-        $view->setMeta('Register new user', 'add new register');
+        $view->setLayout(layout: 'admin');
+
+        $view->setTitle('Создать нового пользователя');
+        $view->setMeta('Создание нового пользователя', 'add new register');
 
         $user = new ModelsUser();
 

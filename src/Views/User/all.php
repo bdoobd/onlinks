@@ -1,13 +1,13 @@
 <div class="main-content">
-    <h1>User list</h1>
+    <h1>Пользователи</h1>
 
     <table class="users">
-        <caption><a class="new btn" href="/user/add">Add user</a></caption>
+        <caption><a class="new btn" href="/admin/user/add">Добавить</a></caption>
         <thead>
             <tr>
                 <th class="id">ID</th>
-                <th>Username</th>
-                <th>Created</th>
+                <th>Имя пользователя</th>
+                <th>Создан</th>
                 <th class="modify">&nbsp;</th>
                 <th class="delete">&nbsp;</th>
             </tr>

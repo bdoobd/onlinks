@@ -10,20 +10,21 @@ class Field extends BaseField
     public const TYPE_PASSWORD = 'password';
     public const TYPE_EMAIL = 'email';
     public const TYPE_NUMBER = 'number';
-    public function __construct(Model $model, string $attribute)
+    public function __construct(Model $model, string $attribute, array $options)
     {
-        $this->model = $model;
-        $this->attribute = $attribute;
+        $this->type = self::TYPE_TEXT;
+        parent::__construct($model, $attribute, $options);
     }
 
     public function renderControl(): string
     {
         return sprintf(
-            '<input type="%s" name="%s" id="%s" value="%s" autocomplete="off">',
+            '<input type="%s" name="%s" id="%s" value="%s" autocomplete="off" %s>',
             $this->type,
             $this->attribute,
             $this->attribute,
             $this->model->{$this->attribute} ?? '',
+            $this->stringifyOptions(),
         );
     }
 

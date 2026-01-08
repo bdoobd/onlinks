@@ -275,36 +275,12 @@ footer {
   }
 }
 
-/* Popup уведомление */
-.popup {
-  width: 100%;
+input:focus,
+button:focus,
+select:focus,
+textarea:focus {
+  background-color: rgb(180, 255, 180);
 }
-.popup-message {
-  width: 100%;
-  padding: 1rem;
-  color: var(--main-text-color);
-  text-align: center;
-  font-size: 1.2rem;
-}
-
-.success {
-  background-image: linear-gradient(
-    to right,
-    transparent,
-    rgba(50, 200, 50, 0.75),
-    transparent
-  );
-}
-
-.warning {
-  background-image: linear-gradient(
-    to right,
-    transparent,
-    rgba(250, 150, 50, 0.75),
-    transparent
-  );
-}
-
 /* Login форма */
 .login-content {
   height: 100vh;
@@ -340,6 +316,57 @@ footer {
     a:active {
       background-color: var(--content-text);
       color: var(--content-block-bg);
+    }
+  }
+}
+
+/* Popup уведомление */
+.popup {
+  width: 100%;
+}
+.popup-message {
+  width: 100%;
+  padding: 1rem;
+  color: var(--main-text-color);
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.success {
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    rgba(50, 200, 50, 0.75),
+    transparent
+  );
+}
+
+.warning {
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    rgba(250, 150, 50, 0.75),
+    transparent
+  );
+}
+
+/* ADMIN боковая панель */
+.admin-side-block {
+  p {
+    width: 100%;
+    background-image: linear-gradient(
+      to right,
+      transparent,
+      var(--header_bg),
+      transparent
+    );
+    color: var(--header-text);
+    text-align: center;
+
+    a {
+      display: block;
+      width: 100%;
+      padding: 2.5rem 1rem;
     }
   }
 }

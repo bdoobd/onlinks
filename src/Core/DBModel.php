@@ -55,7 +55,7 @@ abstract class DBModel extends Model
      * @throws NoPropertyException
      * @return bool|object
      */
-    public static function findOne(array $filter): object
+    public static function findOne(array $filter): object | bool
     {
         $tableName = static::tableName();
         $sql = "SELECT * FROM {$tableName} WHERE " . self::createAndClause($filter);

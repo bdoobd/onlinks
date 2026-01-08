@@ -72,7 +72,11 @@ class View
     {
         $this->meta = array('description' => $description, 'keywords' => $keywords);
     }
-
+    /**
+     * Создать стороки для включения в радел HEAD документа
+     * 
+     * @return string Строка содержащая теги META KEYWORDS и META DESCRIPTION
+     */
     public function getMeta(): string
     {
         $metadata = <<<DTR

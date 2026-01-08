@@ -35,7 +35,7 @@ class Login extends Model
             return false;
         }
         if (!password_verify($this->pwd, $user->pwd)) {
-            $this->addError('name', 'Не верные данные для входа');
+            $this->addError('pwd', 'Не верные данные для входа');
             return false;
         }
 

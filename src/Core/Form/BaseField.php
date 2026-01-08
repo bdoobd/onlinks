@@ -8,13 +8,14 @@ abstract class BaseField
 {
     protected Model $model;
     protected string $attribute;
-    protected string $type = 'text';
+    protected string $type;
     public array $options = [];
 
-    public function __construct(string $type, string $attribute)
+    public function __construct(Model $model, string $attribute, array $options)
     {
-        $this->type = $type;
+        $this->model = $model;
         $this->attribute = $attribute;
+        $this->options = $options;
     }
 
     public function __toString()
@@ -30,6 +31,11 @@ abstract class BaseField
             $this->renderControl(),
             $this->model->getErrorFirst($this->attribute),
         );
+    }
+
+    public function stringifyOptions(): string
+    {
+        return (!empty($this->options)) ? implode(' ', $this->options) : '';
     }
 
     abstract public function renderControl(): string;

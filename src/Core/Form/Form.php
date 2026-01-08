@@ -23,8 +23,8 @@ class Form
         echo '</form>';
     }
 
-    public function field(Model $model, string $attribute): Field
+    public function field(Model $model, string $attribute, array $options = []): Field
     {
-        return new Field($model, $attribute);
+        return new Field($model, $attribute, $options);
     }
 }
