@@ -1,3 +1,7 @@
+<?php
+
+use App\Helpers\Helper;
+?>
 <div class="main-content">
     <h1>Пользователи</h1>
 
@@ -17,9 +21,9 @@
                 <tr>
                     <td><?= $user->id ?></td>
                     <td><?= $user->name ?></td>
-                    <td><?= $user->created ?></td>
-                    <td><a href="/user/<?= $user->id ?>/edit" alt="Edit user"><img src="/public/assets/img/edit.svg" alt="Edit user"></a></td>
-                    <td><a href="/user/<?= $user->id ?>/delete" alt="Delete user"><img src="/public/assets/img/delete.svg" alt="Delete user"></a></td>
+                    <td><?= Helper::convertToDotDate($user->created, false) ?></td>
+                    <td><a href="/admin/user/<?= $user->id ?>/edit" alt="Edit user"><img src="/public/assets/img/edit.svg" alt="Edit user"></a></td>
+                    <td><a href="/admin/user/<?= $user->id ?>/delete" alt="Delete user"><img src="/public/assets/img/delete.svg" alt="Delete user"></a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

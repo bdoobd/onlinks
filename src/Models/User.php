@@ -11,34 +11,31 @@ class User extends DBModel
     public string $pwd;
     public string $confirm_pwd = '';
     public string $created;
-
+    public ?string $modified;
+    /**
+     * Возвращает название таблицы пользователей в базе данных
+     * 
+     * @return string Название таблицы
+     */
     public static function tableName(): string
     {
         return 'usrs';
     }
-
-    public function labels(): array
-    {
-        return [
-            'name' => 'Имя пользователя',
-            'pwd' => 'Пароль',
-            'confirm_pwd' => 'Подтверждение пароля',
-        ];
-    }
+    /**
+     * Сопоставляет название поля в базе данных с именем label для поля формы 
+     * 
+     * @return array{confirm_pwd: string, name: string, pwd: string}
+     */
 
     public function attributes(): array
     {
         return ['name', 'pwd'];
     }
-
-    public function rules(): array
-    {
-        return [
-            'name' => [self::RULE_REQUIRED, [self::RULE_UNIQUE, 'class' => self::class], [self::RULE_MIN, 'min' => 4], [self::RULE_MAX, 'max' => 20]],
-            'pwd' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 6], [self::RULE_MAX, 'max' => 40]],
-            'confirm_pwd' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'pwd']],
-        ];
-    }
+    /**
+     * Возвращает всех пользователей из базы данных без паролей
+     * 
+     * @return array Массив пользователей
+     */
     public static function showAll(): array
     {
         $sql = 'SELECT id, name, created FROM ' . self::tableName();
@@ -47,14 +44,25 @@ class User extends DBModel
 
         return $users;
     }
-
-    public function save(): bool
+    /**
+     * обновление только поля pwd в записи пользователя
+     * 
+     * @return bool
+     */
+    public function update_password(): bool
     {
-        $this->pwd = password_hash($this->pwd, PASSWORD_DEFAULT);
+        $sql = 'UPDATE usrs SET pwd = :pwd WHERE id = :id';
+        $stmt = self::prepare($sql);
+        $stmt->bindValue('pwd', $this->pwd);
+        $stmt->bindValue('id', $this->id);
 
-        return parent::save();
+        return $stmt->execute();
     }
-
+    /**
+     * Возвращает имя пользователя
+     * 
+     * @return string
+     */
     public function getUserName(): string
     {
         return ucfirst($this->name);

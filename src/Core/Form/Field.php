@@ -39,4 +39,10 @@ class Field extends BaseField
         $this->type = self::TYPE_NUMBER;
         return $this;
     }
+
+    public function hideValue(string $prop): self
+    {
+        $this->model->{$prop} = '';
+        return $this;
+    }
 }

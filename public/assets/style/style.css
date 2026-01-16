@@ -273,6 +273,12 @@ footer {
     color: var(--danger);
     text-align: right;
   }
+
+  .failed {
+    color: red;
+    font-size: 1.2rem;
+    text-align: center;
+  }
 }
 
 input:focus,

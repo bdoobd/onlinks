@@ -2,8 +2,6 @@
 
 namespace App\Core;
 
-use Stringable;
-
 class Model
 {
     protected array $errors = [];

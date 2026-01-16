@@ -2,7 +2,6 @@
 
 namespace App\Core;
 
-use App\Exceptions\NoProperty;
 use App\Exceptions\NoPropertyException;
 use PDO;
 use PDOStatement;
@@ -112,6 +111,15 @@ abstract class DBModel extends Model
         }
 
         $stmt->execute();
+
+        return true;
+    }
+
+    public function update(): bool
+    {
+        echo '<pre>';
+        var_dump($this);
+        echo '</pre>';
 
         return true;
     }

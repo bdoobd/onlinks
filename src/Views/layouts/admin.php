@@ -57,9 +57,12 @@ $categories = Categories::findAll();
         <aside>
             <?php foreach ($categories as $category): ?>
                 <div class="admin-side-block">
-                    <p><a href="/admin/categories/home" class="category-link"><?= $category->name ?></a></p>
+                    <p><a href="/admin/categories/<?= $category->action ?>" class="category-link"><?= $category->name ?></a></p>
                 </div>
             <?php endforeach; ?>
+            <div class="admin-side-block">
+                <p><a href="/admin/user/all" class="category-link">Пользователи</a></p>
+            </div>
         </aside>
         <footer class="footer">
             <div class="footer-content">
