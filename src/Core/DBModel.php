@@ -114,12 +114,30 @@ abstract class DBModel extends Model
 
         return true;
     }
-
+    // FIXME: Underconstruction
     public function update(): bool
     {
         echo '<pre>';
         var_dump($this);
         echo '</pre>';
+
+        return true;
+    }
+    /**
+     * Удаляет запись из таблицы базы данных по фильтру
+     * 
+     * @param array $filter Ассоциативный массив вида ключ => значение
+     * 
+     * @return bool
+     */
+    public function delete(array $filter): bool
+    {
+        $sql = "DELETE FROM {$this->tableName()} WHERE {$this->createAndClause($filter)}";
+        $stmt = self::prepare($sql);
+        foreach ($filter as $key => $value) {
+            $stmt->bindValue(":{$key}", $value);
+        }
+        $stmt->execute();
 
         return true;
     }
@@ -150,6 +168,15 @@ abstract class DBModel extends Model
     }
 
     // Private properties
+    /**
+     * Формирует часть стороки запроса SQL для использования в WHERE разделе с использованием оператора AND
+     * 
+     * @param array $filter массив заначений для поля и ключа
+     * 
+     * @throws NoPropertyException
+     * 
+     * @return string
+     */
     private static function createAndClause(array $filter): string
     {
         $attributes = array_keys($filter);

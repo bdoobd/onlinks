@@ -11,57 +11,6 @@ use App\Models\Login;
 
 class User extends BaseController
 {
-    // public function __construct(array $route)
-    // {
-    //     parent::__construct($route);
-    //     // $this->addMiddleware(new AuthMiddleware(['all', 'add']));
-    // }
-    // public function all(): Response
-    // {
-    //     $view = new View($this->route);
-    //     $view->setTitle('List of all users');
-    //     $view->setMeta('All user listing', 'users, list users, accounts');
-
-    //     $users = ModelsUser::showAll();
-
-    //     $data = [
-    //         'users' => $users,
-    //     ];
-
-    //     $markup = $view->render($data);
-
-    //     return new Response($markup);
-    // }
-
-    // public function add(Request $request): Response
-    // {
-    //     $view = new View($this->route);
-    //     $view->setTitle('Register new user');
-    //     $view->setMeta('Register new user', 'add new register');
-
-    //     $user = new ModelsUser();
-
-    //     if ($request->isPost()) {
-
-    //         $user->loadData($request->getRequestBody());
-
-    //         if ($user->validate() && $user->save()) {
-    //             App::$app->session->setPopup('success', 'Пользователь успешно добавлен');
-    //             App::$app->response->redirect('/user/all');
-
-    //             exit();
-    //         }
-    //     }
-
-    //     $data = [
-    //         'model' => $user,
-    //     ];
-
-    //     $markup = $view->render($data);
-
-    //     return new Response($markup);
-    // }
-
     public function login(Request $request): Response
     {
         $view = new View($this->route);

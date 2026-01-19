@@ -9,10 +9,5 @@ use App\Core\Form\Form;
     <fieldset>
         <?= $form->field($model, 'name') ?>
     </fieldset>
-    <?php
-    echo '<pre>';
-    var_dump($model);
-    echo '</pre>';
-    ?>
     <?php Form::tail(); ?>
 </div>

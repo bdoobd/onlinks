@@ -105,18 +105,16 @@ class User extends BaseController
 
     public function delete(Request $request): Response
     {
-        $view = new View($this->route);
-        $view->setLayout('admin');
-        $view->setTitle('Удалить пользователя');
-        $view->setMeta('Удаление пользователя', 'delete remove');
-
         $user = ModelsUser::findOne(['id' => $this->route['id']]);
 
-        $data = [
-            'model' => $user,
-        ];
+        if ($user->delete(['id' => $this->route['id']])) {
+            App::$app->session->setPopup('success', 'Пользователь успешно удалён');
+        } else {
+            App::$app->session->setPopup('warning', 'Произошла ошибка при удалении пользователя');
+        }
 
-        $markup = $view->render($data);
-        return new Response($markup);
+        App::$app->response->redirect('/admin/user/all');
+
+        exit();
     }
 }

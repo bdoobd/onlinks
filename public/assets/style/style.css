@@ -22,8 +22,9 @@
 body {
   background-color: var(--bg-color);
   color: var(--main-text-color);
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
+  font-family:
+    "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans",
+    Arial, sans-serif;
   font-size: 16px;
 }
 
@@ -208,6 +209,15 @@ main {
   .users .modify {
     width: 2rem;
   }
+
+  .users a img {
+    transition: all 0.3s ease-in-out;
+  }
+
+  .users a:hover img,
+  .users a:active img {
+    transform: scale(1.2);
+  }
 }
 /* Раздел боковой панели  */
 aside {
@@ -374,6 +384,32 @@ textarea:focus {
       width: 100%;
       padding: 2.5rem 1rem;
     }
+  }
+}
+
+/* ADMIN окно подтверждения удаления пользователял */
+.confirm-delete {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(180, 180, 180, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  form {
+    max-width: 40rem;
+    background: var(--content-block-bg);
+    color: var(--content-text);
+    padding: 2rem;
+  }
+
+  button {
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    margin-inline-end: 1rem;
   }
 }
 @media only screen and (max-width: 50rem) {
