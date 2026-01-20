@@ -29,4 +29,5 @@ use App\Helpers\Helper;
             <?php endforeach; ?>
         </tbody>
     </table>
+    .delete-container
 </div>
