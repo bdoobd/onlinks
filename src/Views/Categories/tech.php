@@ -1,10 +1,10 @@
 <div class="main-content">
     <?php foreach ($data as $block) : ?>
         <div class="content-block">
-            <h2 class="content-block-title"><?= $block['name'] ?></h2>
+            <h2 class="content-block-title"><?= $block['block'] ?></h2>
             <ul class="content-block-links">
                 <?php foreach ($block['links'] as $item) : ?>
-                    <li class="content-block-item"><a href="<?= $item['url'] ?>" class="content-block-link"><?= $item['name'] ?></a></li>
+                    <li class="content-block-item"><a href="<?= $item['link'] ?>" class="content-block-link"><?= $item['item'] ?></a></li>
                 <?php endforeach; ?>
             </ul>
         </div>

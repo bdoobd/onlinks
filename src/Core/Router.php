@@ -4,6 +4,7 @@ namespace App\Core;
 
 use App\Exceptions\{NoAction, NoClass, NotFoundException};
 use App\Core\Response;
+use App\Helpers\Helper;
 
 class Router
 {
@@ -40,7 +41,6 @@ class Router
         $url = $this->removeQueryString($url);
 
         if ($this->match($url)) {
-            // $controllerName = 'App\\Controllers\\' . ucfirst($this->params['controller']);;
             $controllerName = $this->getNamespace() . ucfirst($this->params['controller']);;
             $action = $this->params['action'];
 
@@ -49,6 +49,8 @@ class Router
             }
 
             $controller = new $controllerName($this->params);
+
+            $action = Helper::toCamelCase($action);
 
             if (!method_exists($controller, $action)) {
                 throw new NoAction();

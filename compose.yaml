@@ -11,6 +11,8 @@ services:
     restart: unless-stopped
     links:
       - db
+    networks:
+      - on_net
   db:
     image: mysql
     container_name: db
@@ -24,7 +26,12 @@ services:
       MYSQL_PASSWORD: letmein
     volumes:
       - my-volume:/var/lib/mysql
+    networks:
+      - on_net
 
 volumes:
   my-volume:
   vscode-server:
+
+networks:
+  on_net:

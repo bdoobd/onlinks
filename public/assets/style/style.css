@@ -387,6 +387,24 @@ textarea:focus {
   }
 }
 
+.admin-section-table {
+  background-color: var(--bg-color);
+
+  caption {
+    background-color: var(--header_bg);
+    color: var(--header-text);
+    font-size: 1.3rem;
+    padding: 1rem;
+    text-align: left;
+  }
+
+  .admin-table-header {
+    font-size: 1rem;
+    padding-block: 0.5rem;
+    text-align: left;
+  }
+}
+
 /* ADMIN окно подтверждения удаления пользователял */
 .confirm-delete {
   position: absolute;

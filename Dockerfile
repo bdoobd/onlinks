@@ -17,7 +17,7 @@ RUN a2enmod rewrite && \
 
 COPY composer.json composer.lock* ./
 
-#RUN composer update --no-dev --no-scripts --optimize-autoloader
-RUN composer install
+RUN composer update --no-dev --no-scripts --optimize-autoloader
+#RUN composer install
 
 EXPOSE 80
