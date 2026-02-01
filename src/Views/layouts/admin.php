@@ -55,6 +55,12 @@ $categories = Categories::findAll();
             {{content}}
         </main>
         <aside>
+            <div class="admin-side-block">
+                <p><a href="/admin/categories/admin-all" class="category-link">Категории</a></p>
+            </div>
+            <div class="admin-side-block">
+                <p><a href="/admin/blocks/admin-all" class="category-link">Разделы категорий</a></p>
+            </div>
             <?php foreach ($categories as $category): ?>
                 <div class="admin-side-block">
                     <p><a href="/admin/categories/<?= $category->id ?>/admin-<?= $category->action ?>" class="category-link"><?= $category->name ?></a></p>

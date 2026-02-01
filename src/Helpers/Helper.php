@@ -24,70 +24,40 @@ class Helper
      * Отформатировать массив полученых из базы данных блоков для передачи в шаблон
      * 
      * @param array $fetched Массив полученный после запроса к базе данных
-     * 
-     * @return array
-     */
-    public static function formatBlockData(array $fetched): array
-    {
-        $tmpArray = [];
-        foreach ($fetched as $block) {
-            $blockId = $block->blockId;
-
-            if (!isset($tmpArray[$blockId])) {
-                $tmpArray[$blockId] = [
-                    'blockId' => $blockId,
-                    'name' => $block->block,
-                    'links' => [],
-                ];
-            }
-
-            $tmpArray[$blockId]['links'][] = [
-                'linkId' => $block->linkId,
-                'name' => $block->item,
-                'url' => $block->link,
-            ];
-        }
-
-        return array_values($tmpArray);
-    }
-    /**
-     * Отформатировать массив полученых из базы данных блоков для передачи в шаблон
-     * 
-     * @param array $fetched Массив полученный после запроса к базе данных
-     * @param string $blockId Имя свойства объекта, которое будет использоваться в качестве идентификатора блока
-     * @param string $subData Имя свойства, в котором будут храниться вложенные данные
+     * @param string $indexKey Имя свойства объекта, которое будет использоваться в качестве идентификатора блока
+     * @param string $subArrayName Имя свойства, в котором будут храниться вложенные данные
      * @param array $firstLevelKeys Массив имен свойств объекта, которые будут включены на первом уровне
      * 
      * @return array
      */
-    public static function formatData(array $fetched, string $blockId, string $subData, array $firstLevelKeys = []): array
+    public static function formatDBData(array $fetched, string $indexKey, string $subArrayName, array $firstLevelKeys = []): array
     {
-        $resultArray = [];
+        $tmpArray = [];
         foreach ($fetched as $block) {
-            $blockId = $block->blockId;
+            $groupId = $block->{$indexKey};
 
-            if (!isset($resultArray[$blockId])) {
-                $resultArray[$blockId] = [];
+            if (!isset($tmpArray[$groupId])) {
+                $tmpArray[$groupId] = [];
 
                 foreach (get_object_vars($block) as $key => $value) {
                     if (in_array($key, $firstLevelKeys, true)) {
-                        $resultArray[$blockId][$key] = $value;
+                        $tmpArray[$groupId][$key] = $value;
                     }
                 }
-                $resultArray[$blockId][$subData] = [];
-            }
 
-            $tmp = [];
+                $tmpArray[$groupId][$subArrayName] = [];
+            }
+            $sub = [];
             foreach (get_object_vars($block) as $key => $value) {
-                if ($key !== $blockId && !in_array($key, $firstLevelKeys, true)) {
-                    $tmp[$key] = $value;
+                if ($key !== $indexKey && !in_array($key, $firstLevelKeys, true)) {
+                    $sub[$key] = $value;
                 }
             }
 
-            $resultArray[$blockId][$subData][] = $tmp;
+            $tmpArray[$groupId][$subArrayName][] = $sub;
         }
 
-        return array_values($resultArray);
+        return array_values($tmpArray);
     }
     /**
      * Получить строку для выборки блоков с фильтром по категориям
@@ -99,6 +69,12 @@ class Helper
         return "SELECT b.id as blockId, b.name as block, l.id as linkId, l.name as item, l.link FROM blocks as b  
                 JOIN links as l ON 
                 b.id = l.blockid WHERE b.catid = :id";
+    }
+    public static function createBlocksSQLString(): string
+    {
+        return "SELECT b.id as blockId, b.name as name, b.itemnum, c.id as catId, c.name as cat FROM blocks as b
+                JOIN cats as c ON 
+                b.catid = c.id";
     }
     /**
      * Конвертирует строку в StudlyCaps из studly-caps. Удаляет дефис и делает первые буквы слов заглавными

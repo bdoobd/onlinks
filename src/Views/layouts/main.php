@@ -33,7 +33,7 @@ $categories = Categories::findAll();
                         <?php if (!App::$app->user): ?>
                             <li class="menu-item"><a href="/user/login" class="menu-link">Login</a></li>
                         <?php else: ?>
-                            <li class="menu-item"><a href="/admin/user/all" class="menu-link">Админ</a></li>
+                            <li class="menu-item"><a href="/admin/categories/admin-all" class="menu-link">Админ</a></li>
                             <li class="menu-item"><a href="/user/logout" class="menu-link"><?= App::$app->user->getUserName() ?> [logout]</a></li>
                         <?php endif; ?>
                     </ul>

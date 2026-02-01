@@ -370,19 +370,25 @@ textarea:focus {
 .admin-side-block {
   p {
     width: 100%;
-    background-image: linear-gradient(
+    /* background-image: linear-gradient(
       to right,
       transparent,
       var(--header_bg),
       transparent
-    );
-    color: var(--header-text);
+    ); */
+    background-color: var(--content-block-bg);
     text-align: center;
 
     a {
       display: block;
       width: 100%;
-      padding: 2.5rem 1rem;
+      padding: 1rem;
+      color: var(--content-link);
+      transition: all 0.3s ease-in-out;
+    }
+
+    a:hover {
+      color: var(--content-text);
     }
   }
 }

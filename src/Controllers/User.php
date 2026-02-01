@@ -23,7 +23,7 @@ class User extends BaseController
         if ($request->isPost()) {
             $login->loadData($request->getRequestBody());
             if ($login->validate() && $login->login()) {
-                App::$app->response->redirect('/admin/user/all');
+                App::$app->response->redirect('/admin/categories/admin-all');
                 exit();
             }
         }

@@ -19,7 +19,7 @@ class Categories extends BaseController
         $blocks = Blocks::runPrepQuery(Helper::createSQLString(), ['id' => $this->route['id']]);
 
         $data = [
-            'data' => Helper::formatData($blocks, 'BlockId', 'links', ['blockId', 'block']),
+            'data' => Helper::formatDBData($blocks, 'blockId', 'links', ['blockId', 'block']),
         ];
 
         $markup = $view->render($data);
@@ -36,7 +36,7 @@ class Categories extends BaseController
         $blocks = Blocks::runPrepQuery(Helper::createSQLString(), ['id' => $this->route['id']]);
 
         $data = [
-            'data' => Helper::formatData($blocks, 'BlockId', 'links', ['blockId', 'block']),
+            'data' => Helper::formatDBData($blocks, 'blockId', 'links', ['blockId', 'block']),
         ];
 
 
@@ -55,7 +55,7 @@ class Categories extends BaseController
 
         $data = [
             'info' => 'Tech section',
-            'data' => Helper::formatData($blocks, 'BlockId', 'links', ['blockId', 'block']),
+            'data' => Helper::formatDBData($blocks, 'blockId', 'links', ['blockId', 'block']),
         ];
 
         $markup = $view->render($data);
@@ -73,7 +73,7 @@ class Categories extends BaseController
 
         $data = [
             'info' => 'Sport section',
-            'data' => Helper::formatData($blocks, 'BlockId', 'links', ['blockId', 'block']),
+            'data' => Helper::formatDBData($blocks, 'blockId', 'links', ['blockId', 'block']),
         ];
 
         $markup = $view->render($data);
