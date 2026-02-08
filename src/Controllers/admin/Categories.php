@@ -2,12 +2,16 @@
 
 namespace App\Controllers\admin;
 
+use App\Core\App;
 use App\Core\View;
+use App\Core\Request;
 use App\Core\Response;
-use App\Core\BaseController;
-use App\Core\Middlewares\AuthMiddleware;
-use App\Helpers\Helper;
 use App\Models\Blocks;
+use App\Helpers\Helper;
+use App\Core\BaseController;
+use App\Forms\CreateCategoryForm;
+use App\Forms\UpdateCategoryForm;
+use App\Core\Middlewares\AuthMiddleware;
 use App\Models\Categories as ModelsCategories;
 
 class Categories extends BaseController
@@ -105,5 +109,70 @@ class Categories extends BaseController
         $markup = $view->render($data);
 
         return new Response($markup);
+    }
+
+    public function add(Request $request): Response
+    {
+        $view = new View($this->route);
+        $view->setLayout('admin');
+        $view->setTitle('Добавить категорию');
+        $view->setMeta('Добавление категории', 'categories add');
+
+        $category = new CreateCategoryForm();
+
+        if ($request->isPost()) {
+            $category = new ModelsCategories();
+            $category->loadData($request->getRequestBody());
+
+            if ($category->validate() && $category->save()) {
+                App::$app->session->setPopup('success', 'Категория успешно добавлена');
+                App::$app->response->redirect('/admin/categories/admin-all');
+
+                exit();
+            }
+        }
+
+        $data = [
+            'model' => $category,
+        ];
+
+        $markup = $view->render($data);
+
+        return new Response($markup);
+    }
+
+    public function update(Request $request): Response
+    {
+        $view = new View($this->route);
+        $view->setLayout('admin');
+        $view->setTitle('Редактировать категорию');
+        $view->setMeta('Редактирование категории', 'categories edit');
+
+        $category = UpdateCategoryForm::findOne(['id' => $this->route['id']]);
+
+        if ($request->isPost()) {
+            $category = new ModelsCategories();
+            $category->loadData($request->getRequestBody());
+
+            if ($category->validate() && $category->update(['id' => $this->route['id']])) {
+                App::$app->session->setPopup('success', 'Категория успешно обновлена');
+                App::$app->response->redirect('/admin/categories/admin-all');
+
+                exit();
+            }
+        }
+
+        $data = [
+            'model' => $category,
+        ];
+
+        $markup = $view->render($data);
+
+        return new Response($markup);
+    }
+
+    public function delete(Request $request): Response
+    {
+        return new Response('Delete category');
     }
 }

@@ -194,6 +194,7 @@ main {
   .users td {
     padding: 0.25rem 1rem;
     text-align: left;
+    font-size: 1.1rem;
   }
 
   .users th {

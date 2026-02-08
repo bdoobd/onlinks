@@ -17,8 +17,8 @@
                     <td><?= $row->id ?></td>
                     <td><?= $row->name ?></td>
                     <td><?= $row->action ?></td>
-                    <td><a href="#" alt="Редактировать ссылку"><img src="/public/assets/img/edit.svg"></a></td>
-                    <td><a href="#" alt="Удалить ссылку"><img src="/public/assets/img/delete.svg"></a></td>
+                    <td><a href="/admin/categories/<?= $row->id ?>/update" alt="Редактировать ссылку"><img src="/public/assets/img/edit.svg"></a></td>
+                    <td><a href="/admin/categories/<?= $row->id ?>/delete" alt="Удалить ссылку"><img src="/public/assets/img/delete.svg"></a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

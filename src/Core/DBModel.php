@@ -103,8 +103,10 @@ abstract class DBModel extends Model
         $attributes = $this->attributes();
         $params = array_map(fn($item) => ":$item", $attributes);
 
-        $stmt = self::prepare("INSERT INTO {$tableName} (" . implode(',', $attributes) . ") 
-            VALUES (" . implode(',', $params) . ")");
+        $sql = "INSERT INTO {$tableName} (" . implode(',', $attributes) . ") 
+            VALUES (" . implode(',', $params) . ")";
+
+        $stmt = self::prepare($sql);
 
         foreach ($attributes as $attribute) {
             $stmt->bindValue(":$attribute", $this->{$attribute});
@@ -114,12 +116,20 @@ abstract class DBModel extends Model
 
         return true;
     }
-    // FIXME: Underconstruction
-    public function update(): bool
+    public function update(array $filter): bool
     {
-        echo '<pre>';
-        var_dump($this);
-        echo '</pre>';
+        $tableName = static::tableName();
+        $attributes = $this->attributes();
+        $sql = "UPDATE {$tableName} SET " . implode(', ', array_map(fn($item) => "$item = :$item", $attributes)) . " WHERE " . self::createAndClause($filter);
+
+        $stmt = self::prepare($sql);
+        foreach ($attributes as $attribute) {
+            $stmt->bindValue(":$attribute", $this->{$attribute});
+        }
+        foreach ($filter as $key => $value) {
+            $stmt->bindValue(":{$key}", $value);
+        }
+        $stmt->execute();
 
         return true;
     }
