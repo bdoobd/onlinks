@@ -23,8 +23,8 @@ use App\Helpers\Helper;
                     <td><?= $user->id ?></td>
                     <td><?= $user->name ?></td>
                     <td><?= Helper::convertToDotDate($user->created, false) ?></td>
-                    <td><a href="/admin/user/<?= $user->id ?>/edit" alt="Edit user" data-id="<?= $user->id ?>" data-name="<?= $user->name ?>"><img src="/public/assets/img/edit.svg" alt="Edit user"></a></td>
-                    <td><a href="#" alt="Delete user" data-id="<?= $user->id ?>" data-name="<?= $user->name ?>"><img src="/public/assets/img/delete.svg" alt="Delete user" data-action="delete"></a></td>
+                    <td><a href="/admin/user/<?= $user->id ?>/edit" alt="Редактировать пользователя" data-id="<?= $user->id ?>" data-name="<?= $user->name ?>"><img src="/public/assets/img/edit.svg" alt="Edit user"></a></td>
+                    <td><a href="#" alt="Удалить пользователя" data-id="<?= $user->id ?>" data-name="<?= $user->name ?>"><img src="/public/assets/img/delete.svg" alt="Delete user" data-action="delete"></a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

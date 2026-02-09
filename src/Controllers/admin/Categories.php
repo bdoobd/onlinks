@@ -171,8 +171,18 @@ class Categories extends BaseController
         return new Response($markup);
     }
 
-    public function delete(Request $request): Response
+    public function delete(): Response
     {
-        return new Response('Delete category');
+        $category = ModelsCategories::findOne(['id' => $this->route['id']]);
+
+        if ($category->delete(['id' => $this->route['id']])) {
+            App::$app->session->setPopup('success', 'Категория успешно удалёна');
+        } else {
+            App::$app->session->setPopup('warning', 'Произошла ошибка при удалении категории');
+        }
+
+        App::$app->response->redirect('/admin/categories/admin-all');
+
+        exit();
     }
 }

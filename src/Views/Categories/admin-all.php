@@ -1,3 +1,4 @@
+<script defer src="/public/assets/js/delete_cat.js"></script>
 <div class="main-content">
     <h1>Категории</h1>
     <table class="users">
@@ -18,9 +19,10 @@
                     <td><?= $row->name ?></td>
                     <td><?= $row->action ?></td>
                     <td><a href="/admin/categories/<?= $row->id ?>/update" alt="Редактировать ссылку"><img src="/public/assets/img/edit.svg"></a></td>
-                    <td><a href="/admin/categories/<?= $row->id ?>/delete" alt="Удалить ссылку"><img src="/public/assets/img/delete.svg"></a></td>
+                    <td><a href="#" alt="Удалить ссылку" data-id="<?= $row->id ?>" data-name="<?= $row->name ?>"><img src="/public/assets/img/delete.svg" data-action="delete"></a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
+    <div class="delete-container"></div>
 </div>
