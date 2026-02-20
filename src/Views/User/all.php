@@ -5,7 +5,6 @@ use App\Helpers\Helper;
 <script defer src="/assets/js/delete_user.js"></script>
 <div class="main-content">
     <h1>Пользователи</h1>
-
     <table class="users">
         <caption><a class="new btn" href="/admin/user/add">Добавить</a></caption>
         <thead>

@@ -11,6 +11,8 @@ class Model
     const RULE_UNIQUE = 'unique';
     const RULE_MIN = 'min';
     const RULE_MAX = 'max';
+    const RULE_INT = 'int';
+
     public function attributes(): array
     {
         return [];
@@ -29,14 +31,44 @@ class Model
     {
         return $this->labels()[$attribute] ?? $attribute;
     }
-
+    /**
+     * Загрузка данных из POST/GET массива в объект
+     * 
+     * @param array $data
+     * @return void
+     */
     public function loadData(array $data): void
     {
         foreach ($data as $key => $value) {
-            if (property_exists($this, $key)) {
-                $this->{$key} = $value;
+            if (!property_exists($this, $key)) {
+                continue;
             }
+
+            $reflectionProp = new \ReflectionProperty($this, $key);
+            $propType = $reflectionProp->getType();
+
+            if ($propType instanceof \ReflectionNamedType) {
+                $typeName = $propType->getName();
+                $value = $this->castValue($value, $typeName);
+            }
+
+            $this->{$key} = $value;
         }
+    }
+    /**
+     * Приведение типа переменной
+     * 
+     * @param string $value Значение переменной
+     * @param string $type Тип переменной 
+     */
+    private function castValue(string $value, string $type)
+    {
+        return match ($type) {
+            'int' => (int) $value,
+            'float' => (float) $value,
+            'bool' => filter_var($value, FILTER_VALIDATE_BOOL),
+            default => $value,
+        };
     }
 
     public function validate(): bool
@@ -81,6 +113,10 @@ class Model
                         $this->addErrorByRule($attribute, self::RULE_UNIQUE);
                     }
                 }
+
+                if ($ruleName === self::RULE_INT && !filter_var($value, FILTER_VALIDATE_INT)) {
+                    $this->addErrorByRule($attribute, self::RULE_INT);
+                }
             }
         }
 
@@ -113,6 +149,7 @@ class Model
             self::RULE_UNIQUE => 'Значение поля {field} уже существует',
             self::RULE_MIN => 'Минимальное количество знаков для данного поля {min}',
             self::RULE_MAX => 'Максимальное количество знаков для данного поля {max}',
+            self::RULE_INT => 'Значение поля должно быть целым числом',
         ];
     }
 

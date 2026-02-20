@@ -13,6 +13,7 @@
   --danger: rgb(250, 50, 50);
   --warning: rgba(250, 250, 50, 1);
   --success: rgba(50, 250, 50, 1);
+  --id-column: 4rem;
 }
 
 * {
@@ -261,13 +262,15 @@ footer {
   }
 
   label,
-  input {
+  input,
+  select {
     display: block;
     margin-block-end: 0.5rem;
     font-size: 1.2rem;
   }
 
-  input {
+  input,
+  select {
     width: 100%;
     padding: 0.25rem;
     border-radius: 0.5rem;
@@ -371,12 +374,6 @@ textarea:focus {
 .admin-side-block {
   p {
     width: 100%;
-    /* background-image: linear-gradient(
-      to right,
-      transparent,
-      var(--header_bg),
-      transparent
-    ); */
     background-color: var(--content-block-bg);
     text-align: center;
 
@@ -394,10 +391,16 @@ textarea:focus {
   }
 }
 
+.add-btn-block {
+  align-self: self-end;
+  justify-self: end;
+}
 .admin-section-table {
   background-color: var(--bg-color);
+  grid-column: 1 / -1;
 
-  caption {
+  caption,
+  th {
     background-color: var(--header_bg);
     color: var(--header-text);
     font-size: 1.3rem;
@@ -409,6 +412,19 @@ textarea:focus {
     font-size: 1rem;
     padding-block: 0.5rem;
     text-align: left;
+  }
+
+  .modify,
+  .delete {
+    width: 2rem;
+  }
+
+  .id {
+    width: var(--id-column);
+  }
+
+  .order {
+    width: 5rem;
   }
 }
 
@@ -437,6 +453,11 @@ textarea:focus {
     margin-inline-end: 1rem;
   }
 }
+/* Общие стили */
+.center {
+  text-align: center;
+}
+
 @media only screen and (max-width: 50rem) {
   .main-container {
     grid-template-columns: 1fr;

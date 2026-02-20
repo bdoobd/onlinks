@@ -23,4 +23,10 @@ class Categories extends DBModel
     {
         return ['name', 'action'];
     }
+
+    public static function catList(): array
+    {
+        $sql = 'SELECT id, name FROM ' . self::tableName();
+        return self::runPrepQuery($sql);
+    }
 }

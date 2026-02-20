@@ -27,4 +27,8 @@ class Form
     {
         return new Field($model, $attribute, $options);
     }
+    public function select(Model $model, string $attribute, array $options = [], int $selected = 0): Select
+    {
+        return new Select($model, $attribute, $options, $selected);
+    }
 }
