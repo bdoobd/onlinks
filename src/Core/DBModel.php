@@ -101,6 +101,7 @@ abstract class DBModel extends Model
     {
         $tableName = static::tableName();
         $attributes = $this->attributes();
+
         $params = array_map(fn($item) => ":$item", $attributes);
 
         $sql = "INSERT INTO {$tableName} (" . implode(',', $attributes) . ") 
@@ -116,6 +117,13 @@ abstract class DBModel extends Model
 
         return true;
     }
+    /**
+     * Обновляет данные в базе данных по фильтру
+     * 
+     * @param array $filter ссоциативный массив вида ключ => значение
+     * 
+     * @return bool
+     */
     public function update(array $filter): bool
     {
         $tableName = static::tableName();

@@ -9,7 +9,7 @@ use App\Core\Form\Form;
     <fieldset>
         <?= $form->select($model, 'catId', $cats, $selected); ?>
         <?= $form->field($model, 'name', ['tabindex="2"', 'autofocus']); ?>
-        <?= $form->field($model, 'itemnum', ['tabindex="3"']); ?>
+        <?= $form->field($model, 'itemnum', ['tabindex="3"'])->numberField(); ?>
         <button type="submit" name="submit" tabindex="4">Создать</button>
     </fieldset>
     <?php Form::tail(); ?>

@@ -17,7 +17,6 @@ class Select extends BaseField
         $optionsMarkup = '';
         foreach ($this->options as $value => $label) {
             $selected = $value == $this->selected ? 'selected' : '';
-            // $selected = ($this->model->{$this->attribute} == $value) ? 'selected' : '';
             $optionsMarkup .= sprintf('<option value="%s" %s>%s</option>', $value, $selected, $label);
         }
         return sprintf(

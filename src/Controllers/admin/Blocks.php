@@ -50,7 +50,7 @@ class Blocks extends BaseController
         if ($request->isPost()) {
             $block->loadData($request->getRequestBody());
 
-            if ($block->validate()) {
+            if ($block->validate() && $block->save()) {
                 App::$app->session->setPopup('success', 'Блок успешно создан');
                 App::$app->response->redirect('/admin/blocks/admin-all');
 
@@ -62,6 +62,8 @@ class Blocks extends BaseController
         foreach (Categories::catList() as $cat) {
             $categoryOptions[$cat->id] = $cat->name;
         }
+
+        $block->itemnum = $block->getNextItemNumber($this->route['id']);
 
         $data = [
             'model' => $block,
