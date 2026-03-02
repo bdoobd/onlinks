@@ -395,6 +395,14 @@ textarea:focus {
   align-self: self-end;
   justify-self: end;
 }
+
+.block-header {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .admin-section-table {
   background-color: var(--bg-color);
   grid-column: 1 / -1;
@@ -425,6 +433,11 @@ textarea:focus {
 
   .order {
     width: 5rem;
+  }
+
+  .category-title {
+    font-size: 1.2rem;
+    padding: 1rem;
   }
 }
 

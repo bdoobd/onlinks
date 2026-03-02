@@ -12,6 +12,7 @@ use App\Core\BaseController;
 use App\Forms\CreateBlockForm;
 use App\Models\Blocks as ModelsBlocks;
 use App\Core\Middlewares\AuthMiddleware;
+use App\Forms\UpdateBlockForm;
 
 class Blocks extends BaseController
 {
@@ -74,5 +75,51 @@ class Blocks extends BaseController
         $markup = $view->render($data);
 
         return new Response($markup);
+    }
+
+    public function update(Request $request): Response
+    {
+        $view = new View($this->route);
+        $view->setLayout('admin');
+        $view->setTitle('Редактирование блока');
+        $view->setMeta('Редактирование блока', 'blocks update');
+
+        $block = UpdateBlockForm::findOne(['id' => $this->route['id']]);
+
+        if ($request->isPost()) {
+            $block->loadData($request->getRequestBody());
+
+            if ($block->validate() && $block->update(['id' => $block->id])) {
+                App::$app->session->setPopup('success', 'Блок успешно обновлен');
+                App::$app->response->redirect('/admin/blocks/admin-all');
+
+                exit();
+            }
+        }
+
+        $data = [
+            'model' => $block,
+            'cats' => array_column(Categories::catList(), 'name', 'id'),
+            'selected' => $block->catid,
+        ];
+
+        $markup = $view->render($data);
+
+        return new Response($markup);
+    }
+
+    public function delete(): void
+    {
+        $block = ModelsBlocks::findOne(['id' => $this->route['id']]);
+
+        if ($block->delete(['id' => $this->route['id']])) {
+            App::$app->session->setPopup('success', 'Блок успешно удалён');
+        } else {
+            App::$app->session->setPopup('warning', 'Произошла ошибка при удалении блока');
+        }
+
+        App::$app->response->redirect('/admin/blocks/admin-all');
+
+        exit();
     }
 }

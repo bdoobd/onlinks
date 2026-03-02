@@ -7,9 +7,6 @@
                     <li class="content-block-item"><a href="<?= $item['link'] ?>" class="content-block-link"><?= $item['item'] ?></a></li>
                 <?php endforeach; ?>
             </ul>
-            <div class="content-block-footer">
-                <span class="add-item">+</span>
-            </div>
         </div>
     <?php endforeach; ?>
 </div>
