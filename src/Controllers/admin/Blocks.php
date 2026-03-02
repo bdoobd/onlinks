@@ -59,16 +59,11 @@ class Blocks extends BaseController
             }
         }
 
-        $categoryOptions = [];
-        foreach (Categories::catList() as $cat) {
-            $categoryOptions[$cat->id] = $cat->name;
-        }
-
         $block->itemnum = $block->getNextItemNumber($this->route['id']);
 
         $data = [
             'model' => $block,
-            'cats' => $categoryOptions,
+            'cats' => array_column(Categories::catList(), 'name', 'id'),
             'selected' => $this->route['id'],
         ];
 
