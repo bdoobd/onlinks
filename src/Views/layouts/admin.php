@@ -63,7 +63,7 @@ $categories = Categories::findAll();
             </div>
             <?php foreach ($categories as $category): ?>
                 <div class="admin-side-block">
-                    <p><a href="/admin/categories/<?= $category->id ?>/admin-<?= $category->action ?>" class="category-link"><?= $category->name ?></a></p>
+                    <p><a href="/admin/links/<?= $category->id ?>/admin-<?= $category->action ?>" class="category-link"><?= $category->name ?></a></p>
                 </div>
             <?php endforeach; ?>
             <div class="admin-side-block">

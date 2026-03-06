@@ -10,6 +10,7 @@ class Field extends BaseField
     public const TYPE_PASSWORD = 'password';
     public const TYPE_EMAIL = 'email';
     public const TYPE_NUMBER = 'number';
+    public const TYPE_URL = 'url';
     public function __construct(Model $model, string $attribute, array $options)
     {
         $this->type = self::TYPE_TEXT;
@@ -40,9 +41,15 @@ class Field extends BaseField
         return $this;
     }
 
-    public function hideValue(string $prop): self
+    // public function hideValue(string $prop): self
+    // {
+    //     $this->model->{$prop} = '';
+    //     return $this;
+    // }
+
+    public function urlField(): self
     {
-        $this->model->{$prop} = '';
+        $this->type = self::TYPE_URL;
         return $this;
     }
 }

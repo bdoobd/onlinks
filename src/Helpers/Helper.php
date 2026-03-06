@@ -66,7 +66,7 @@ class Helper
      */
     public static function createSQLString(): string
     {
-        return "SELECT b.id as blockId, b.name as block, l.id as linkId, l.name as item, l.link FROM blocks as b  
+        return "SELECT b.id as blockId, b.name as block, b.catid as catId, l.id as linkId, l.name as item, l.link, l.linknum FROM blocks as b  
                 JOIN links as l ON 
                 b.id = l.blockid WHERE b.catid = :id";
     }

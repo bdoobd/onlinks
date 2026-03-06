@@ -13,5 +13,6 @@ $app->router->add('{controller}/{id:\d+}/{action}');
 $app->router->add('{controller}/{id:\d+}/{action}/{cid:\d+}');
 $app->router->add('admin/{controller}/{action}', ['namespace' => 'admin']);
 $app->router->add('admin/{controller}/{id:\d+}/{action}', ['namespace' => 'admin']);
+$app->router->add('admin/{controller}/{id:\d+}/{action}/{cid:\d+}', ['namespace' => 'admin']);
 
 $app->run();

@@ -22,7 +22,7 @@
                         <td class="center"><?= $row['blockId'] ?></td>
                         <td><?= $row['name'] ?></td>
                         <td class="center"><?= $row['itemnum'] ?></td>
-                        <td class="center action"><a href="/admin/blocks/<?= $row['blockId'] ?>/update" alt="Редактировать ссылку"><img src="/public/assets/img/edit.svg"></a></td>
+                        <td class="center action"><a href="/admin/blocks/<?= $row['blockId'] ?>/update" alt="Редактировать блок"><img src="/public/assets/img/edit.svg"></a></td>
                         <td class="center action"><a href="#" alt="Удалить ссылку"><img src="/public/assets/img/delete.svg" data-action="delete" data-id="<?= $row['blockId'] ?>" data-name="<?= $row['name'] ?>"></a></td>
                     </tr>
                 <?php endforeach; ?>

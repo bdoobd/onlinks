@@ -15,4 +15,11 @@ class Blocks extends DBModel
     {
         return 'blocks';
     }
+
+    public static function blockList(int $catId): array
+    {
+        $sql = 'SELECT id, name FROM ' . self::tableName() . ' WHERE catid = :catid';
+
+        return self::runPrepQuery($sql, ['catid' => $catId]);
+    }
 }

@@ -21,77 +21,77 @@ class Categories extends BaseController
         parent::__construct($route);
         $this->addMiddleware(new AuthMiddleware());
     }
-    public function adminIndex(): Response
-    {
-        $view = new View($this->route);
-        $view->setLayout('admin');
-        $view->setTitle('Разделы в домашней категории');
-        $view->setMeta('Блоки в категории HOME', 'index home start');
+    // public function adminIndex(): Response
+    // {
+    //     $view = new View($this->route);
+    //     $view->setLayout('admin');
+    //     $view->setTitle('Разделы в домашней категории');
+    //     $view->setMeta('Блоки в категории HOME', 'index home start');
 
-        $raw_data = Blocks::runPrepQuery(Helper::createSQLString(), ['id' => $this->route['id']]);
+    //     $raw_data = Blocks::runPrepQuery(Helper::createSQLString(), ['id' => $this->route['id']]);
 
-        $data = [
-            'data' => Helper::formatDBData($raw_data, 'blockId', 'links', ['blockId', 'block']),
-        ];
+    //     $data = [
+    //         'data' => Helper::formatDBData($raw_data, 'blockId', 'links', ['blockId', 'block']),
+    //     ];
 
-        $markup = $view->render($data);
+    //     $markup = $view->render($data);
 
-        return new Response($markup);
-    }
+    //     return new Response($markup);
+    // }
 
-    public function adminBlogs(): Response
-    {
-        $view = new View($this->route);
-        $view->setLayout('admin');
-        $view->setTitle('Разделы в блогах');
-        $view->setMeta('Блоки в категории BLOG', 'blog');
+    // public function adminBlogs(): Response
+    // {
+    //     $view = new View($this->route);
+    //     $view->setLayout('admin');
+    //     $view->setTitle('Разделы в блогах');
+    //     $view->setMeta('Блоки в категории BLOG', 'blog');
 
-        $raw_data = Blocks::runPrepQuery(Helper::createSQLString(), ['id' => $this->route['id']]);
+    //     $raw_data = Blocks::runPrepQuery(Helper::createSQLString(), ['id' => $this->route['id']]);
 
-        $data = [
-            'data' => Helper::formatDBData($raw_data, 'blockId', 'links', ['blockId', 'block']),
-        ];
+    //     $data = [
+    //         'data' => Helper::formatDBData($raw_data, 'blockId', 'links', ['blockId', 'block']),
+    //     ];
 
-        $markup = $view->render($data);
+    //     $markup = $view->render($data);
 
-        return new Response($markup);
-    }
+    //     return new Response($markup);
+    // }
 
-    public function adminTech(): Response
-    {
-        $view = new View($this->route);
-        $view->setLayout('admin');
-        $view->setTitle('Разделы в технике');
-        $view->setMeta('Блоки в категории TECH', 'tech');
+    // public function adminTech(): Response
+    // {
+    //     $view = new View($this->route);
+    //     $view->setLayout('admin');
+    //     $view->setTitle('Разделы в технике');
+    //     $view->setMeta('Блоки в категории TECH', 'tech');
 
-        $raw_data = Blocks::runPrepQuery(Helper::createSQLString(), ['id' => $this->route['id']]);
+    //     $raw_data = Blocks::runPrepQuery(Helper::createSQLString(), ['id' => $this->route['id']]);
 
-        $data = [
-            'data' => Helper::formatDBData($raw_data, 'blockId', 'links', ['blockId', 'block']),
-        ];
+    //     $data = [
+    //         'data' => Helper::formatDBData($raw_data, 'blockId', 'links', ['blockId', 'block']),
+    //     ];
 
-        $markup = $view->render($data);
+    //     $markup = $view->render($data);
 
-        return new Response($markup);
-    }
+    //     return new Response($markup);
+    // }
 
-    public function adminSport(): Response
-    {
-        $view = new View($this->route);
-        $view->setLayout('admin');
-        $view->setTitle('Разделы в спорте');
-        $view->setMeta('Блоки в категории SPORT', 'sport');
+    // public function adminSport(): Response
+    // {
+    //     $view = new View($this->route);
+    //     $view->setLayout('admin');
+    //     $view->setTitle('Разделы в спорте');
+    //     $view->setMeta('Блоки в категории SPORT', 'sport');
 
-        $raw_data = Blocks::runPrepQuery(Helper::createSQLString(), ['id' => $this->route['id']]);
+    //     $raw_data = Blocks::runPrepQuery(Helper::createSQLString(), ['id' => $this->route['id']]);
 
-        $data = [
-            'data' => Helper::formatDBData($raw_data, 'blockId', 'links', ['blockId', 'block']),
-        ];
+    //     $data = [
+    //         'data' => Helper::formatDBData($raw_data, 'blockId', 'links', ['blockId', 'block']),
+    //     ];
 
-        $markup = $view->render($data);
+    //     $markup = $view->render($data);
 
-        return new Response($markup);
-    }
+    //     return new Response($markup);
+    // }
 
     public function adminAll(): Response
     {
@@ -125,10 +125,6 @@ class Categories extends BaseController
             $category->loadData($request->getRequestBody());
 
             if ($category->validate() && $category->save()) {
-                App::$app->session->setPopup('success', 'Категория успешно добавлена');
-                App::$app->response->redirect('/admin/categories/admin-all');
-
-                exit();
             }
         }
 

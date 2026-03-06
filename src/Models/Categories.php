@@ -23,7 +23,11 @@ class Categories extends DBModel
     {
         return ['name', 'action'];
     }
-
+    /**
+     * Возвташает массив объектов названий категорий и их ID
+     * 
+     * @return array Массив объектов категорий с полями id и name
+     */
     public static function catList(): array
     {
         $sql = 'SELECT id, name FROM ' . self::tableName();
