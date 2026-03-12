@@ -9,7 +9,7 @@ class Links extends DBModel
     public int $id;
     public int $blockid;
     public string $name;
-    public string $url;
+    public string $link;
     public int $linknum;
     public static function tableName(): string
     {

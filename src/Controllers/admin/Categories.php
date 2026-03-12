@@ -94,7 +94,7 @@ class Categories extends BaseController
         return new Response($markup);
     }
 
-    public function delete(): Response
+    public function delete(): void
     {
         $category = ModelsCategories::findOne(['id' => $this->route['id']]);
 

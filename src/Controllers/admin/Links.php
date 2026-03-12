@@ -22,7 +22,7 @@ class Links extends BaseController
         $this->addMiddleware(new AuthMiddleware());
     }
 
-    public function adminIndex()
+    public function adminIndex(): Response
     {
         $view = new View($this->route);
         $view->setLayout('admin');
@@ -40,6 +40,56 @@ class Links extends BaseController
         return new Response($markup);
     }
 
+    public function adminBlogs(): Response
+    {
+        $view = new View($this->route);
+        $view->setLayout('admin');
+        $view->setTitle('Ссылки в категории BLOGS');
+        $view->setMeta('Ссылки в категории BLOGS', 'index blogs start');
+
+        $raw_data = ModelsLinks::runPrepQuery(Helper::createSQLString(), ['id' => $this->route['id']]);
+        $data = [
+            'data' => Helper::formatDBData($raw_data, 'blockId', 'links', ['blockId', 'block', 'catId']),
+        ];
+
+        $markup = $view->render($data);
+
+        return new Response($markup);
+    }
+
+    public function adminTech(): Response
+    {
+        $view = new View($this->route);
+        $view->setLayout('admin');
+        $view->setTitle('Ссылки в категории TECH');
+        $view->setMeta('Ссылки в категории TECH', 'index tech start');
+
+        $raw_data = ModelsLinks::runPrepQuery(Helper::createSQLString(), ['id' => $this->route['id']]);
+        $data = [
+            'data' => Helper::formatDBData($raw_data, 'blockId', 'links', ['blockId', 'block', 'catId']),
+        ];
+
+        $markup = $view->render($data);
+
+        return new Response($markup);
+    }
+
+    public function adminSport(): Response
+    {
+        $view = new View($this->route);
+        $view->setLayout('admin');
+        $view->setTitle('Ссылки в категории SPORT');
+        $view->setMeta('Ссылки в категории SPORT', 'index sport start');
+
+        $raw_data = ModelsLinks::runPrepQuery(Helper::createSQLString(), ['id' => $this->route['id']]);
+        $data = [
+            'data' => Helper::formatDBData($raw_data, 'blockId', 'links', ['blockId', 'block', 'catId']),
+        ];
+
+        $markup = $view->render($data);
+
+        return new Response($markup);
+    }
     public function add(Request $request): Response
     {
         $view = new View($this->route);
@@ -103,5 +153,20 @@ class Links extends BaseController
         $markup = $view->render($data);
 
         return new Response($markup);
+    }
+
+    public function delete(): void
+    {
+        $link = ModelsLinks::findOne(['id' => $this->route['id']]);
+
+        if ($link->delete(['id' => $this->route['id']])) {
+            App::$app->session->setPopup('success', 'Ссылка успешно удалена');
+        } else {
+            App::$app->session->setPopup('warning', 'Произошла ошибка при удалении ссылки');
+        }
+
+        App::$app->response->redirect('/admin/links/' . Blocks::getCatId($link->blockid) . '/admin-index');
+
+        exit();
     }
 }
