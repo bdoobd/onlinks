@@ -15,4 +15,10 @@ class Links extends DBModel
     {
         return 'links';
     }
+
+    public static function linkList(int $blockId): array
+    {
+        $sql = 'SELECT id, name FROM ' . self::tableName() . ' WHERE blockid = :blockid';
+        return self::runPrepQuery($sql, ['blockid' => $blockId]);
+    }
 }
