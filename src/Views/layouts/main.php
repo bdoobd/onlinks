@@ -57,21 +57,25 @@ $categories = Categories::findAll();
         </main>
         <aside>
             <div class="side-block">
-                <p><strong>10.12.2025</strong> Lorem ipsum dolor sit amet.</p>
+                <p>Lorem ipsum dolor sit amet.</p>
+                <p><a href="#"><img src="/public/assets/img/close_small.svg" alt="Удалить ссылку"></a></p>
             </div>
             <div class="side-block">
-                <p><strong>10.12.2025</strong> Lorem ipsum dolor sit amet.</p>
+                <p>Lorem ipsum dolor sit amet.</p>
+                <p><a href="#"><img src="/public/assets/img/close_small.svg" alt="Удалить ссылку"></a></p>
             </div>
             <div class="side-block">
-                <p><strong>10.12.2025</strong> Lorem ipsum dolor sit amet.</p>
+                <p>Lorem ipsum dolor sit amet.</p>
+                <p><a href="#"><img src="/public/assets/img/close_small.svg" alt="Удалить ссылку"></a></p>
             </div>
             <div class="side-block">
-                <p><strong>10.12.2025</strong> Lorem ipsum dolor sit amet.</p>
+                <p>Lorem ipsum dolor sit amet.</p>
+                <p><a href="#"><img src="/public/assets/img/close_small.svg" alt="Удалить ссылку"></a></p>
             </div>
             <div class="side-block">
-                <p><strong>10.12.2025</strong> Lorem ipsum dolor sit amet.</p>
-            </div>
-            <?= $this->getMeta(); ?>
+                <p>Lorem ipsum dolor sit amet.</p>
+                <div class="side-block__delete"><a href="#"><img src="/public/assets/img/close_small.svg" alt="Удалить ссылку"></a></di>
+                </div>
         </aside>
         <footer class="footer">
             <div class="footer-content">
